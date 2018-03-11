@@ -2,6 +2,8 @@
 user = mysql
 bind-address = 0.0.0.0
 default_storage_engine = InnoDB
+general_log_file = /proc/self/fd/1
+log_error = /proc/self/fd/2
 binlog_format = row
 innodb_autoinc_lock_mode = 2
 innodb_flush_log_at_trx_commit = 2
