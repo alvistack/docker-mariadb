@@ -14,7 +14,7 @@
 
 FROM mariadb:10.2
 
-ENV POD_NAMESPACE "mariadb"
+ENV POD_NAMESPACE "default"
 
 ENTRYPOINT [ "/usr/local/bin/dumb-init", "--" ]
 CMD        [ "/usr/sbin/mysqld" ]
