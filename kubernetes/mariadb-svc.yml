@@ -1,0 +1,22 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mariadb
+  annotations:
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+  labels:
+    service: mariadb
+spec:
+  ports:
+    - name: mysql
+      port: 3306
+    - name: state-snapshot-transfer
+      port: 4444
+    - name: replication-traffic
+      port: 4567
+    - name: incremental-state-transfer
+      port: 4568
+  selector:
+    service: mariadb
+  clusterIP: None

@@ -1,0 +1,80 @@
+piVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mariadb
+spec:
+  serviceName: mariadb
+  replicas: 3
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      service: mariadb
+  template:
+    metadata:
+      labels:
+        service: mariadb
+    spec:
+      initContainers:
+        - name: bootstrap
+          image: alvistack/mariadb:latest
+          imagePullPolicy: Always
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb
+                  key: MYSQL_ROOT_PASSWORD
+          args:
+            - /bin/sh
+            - -c 
+            - docker-entrypoint.sh mysqld --wsrep-new-cluster --wsrep-cluster-address=gcomm://
+          volumeMounts:
+            - name: mariadb-pvc-var-lib-mysql
+              mountPath: "/var/lib/mysql"
+      containers:
+        - name: mariadb
+          image: alvistack/mariadb:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3306
+            - containerPort: 4444
+            - containerPort: 4567
+            - containerPort: 4568
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb
+                  key: MYSQL_ROOT_PASSWORD
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+          args:
+            - /bin/sh
+            - -c 
+            - peer-finder -on-start=on-start.sh -service=mariadb
+          readinessProbe:
+            exec:
+              command:
+                - /bin/bash
+                - -c
+                - mysql -uroot -p$MYSQL_ROOT_PASSWORD -e "SELECT 1"
+            initialDelaySeconds: 15
+            timeoutSeconds: 5
+            successThreshold: 2
+            failureThreshold: 300
+          volumeMounts:
+            - name: mariadb-pvc-var-lib-mysql
+              mountPath: "/var/lib/mysql"
+  volumeClaimTemplates:
+    - metadata:
+        name: mariadb-pvc-var-lib-mysql
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
