@@ -14,5 +14,4 @@ if [ "$WSREP_CLUSTER_ADDRESS" == "$HOSTNAME" ]; then
 	ARGS="$ARGS --wsrep-new-cluster"
 fi
 
-# See https://stackoverflow.com/a/22741718
-setsid "$CMD $ARGS" >& /dev/null < /dev/null &
+exec $CMD $ARGS >/proc/self/fd/2
