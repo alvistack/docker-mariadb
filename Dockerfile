@@ -22,7 +22,7 @@ CMD        [ "/usr/sbin/mysqld" ]
 # Prepare APT depedencies
 RUN set -ex \
     && apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y curl \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y curl patch \
     && rm -rf /var/lib/apt/lists/*
 
 # Install dumb-init
@@ -38,6 +38,6 @@ RUN set -ex \
 # Copy files
 COPY files /
 
-# Hack docker-entrypoint.sh so just handle initialization
+# Apply patches
 RUN set -ex \
-    && sed -i 's/^exec "$@"//g' /usr/local/bin/docker-entrypoint.sh
+    && patch -d/ -p0 < /alvistack.patch
