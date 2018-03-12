@@ -10,6 +10,15 @@ MariaDB is a community-developed fork of the MySQL relational database managemen
 
 Learn more about MariaDB: <https://mariadb.org/>
 
+Supported Tags and Respective Dockerfile Links
+----------------------------------------------
+
+-   [10.3 (10.3.x/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/10.3.x/Dockerfile)
+-   [10.2, latest (master/Dockerfile](https://github.com/alvistack/docker-mariadb/blob/master/Dockerfile)
+-   [10.1 (10.1.x/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/10.1.x/Dockerfile)
+-   [10.0 (10.0.x/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/10.0.x/Dockerfile)
+-   [5.5 (5.5.x/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/5.5.x/Dockerfile)
+
 Overview
 --------
 
@@ -56,16 +65,30 @@ Start MariaDB:
 
 ### Kubernetes StatefulSet
 
-Be sure to use the `service.alpha.kubernetes.io/tolerate-unready-endpoints` on the governing service of the StatefulSet so that all peers are listed in endpoints before any peers are started, e.g.
+Be sure to use the `service.alpha.kubernetes.io/tolerate-unready-endpoints` on the governing headless service of the StatefulSet so that all peers are listed in endpoints before any peers are started, e.g.
 
-    ---
-    apiVersion: v1
-    kind: Service
-    metadata:
-      name: mariadb
-      annotations:
-        service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
-    ...
+	---
+	apiVersion: v1
+	kind: Service
+	metadata:
+	  name: mariadb
+	  annotations:
+		service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+	  labels:
+		service: mariadb
+	spec:
+	  ports:
+		- name: mysql
+		  port: 3306
+		- name: state-snapshot-transfer
+		  port: 4444
+		- name: replication-traffic
+		  port: 4567
+		- name: incremental-state-transfer
+		  port: 4568
+	  selector:
+		service: mariadb
+	  clusterIP: None
 
 Also need to use `peer-finder` as wrapper in order to start daemon with peer auto discovery, e.g.
 
