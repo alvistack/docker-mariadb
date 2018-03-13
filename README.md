@@ -14,11 +14,11 @@ Supported Tags and Respective `Dockerfile` Links
 ------------------------------------------------
 
 -   [`latest` (master/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/master/Dockerfile)
--   [`10.3` (10.3.x/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/10.3.x/Dockerfile)
--   [`10.2` (10.2.x/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/10.2.x/Dockerfile)
--   [`10.1` (10.1.x/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/10.1.x/Dockerfile)
--   [`10.0` (10.0.x/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/10.0.x/Dockerfile)
--   [`5.5` (5.5.x/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/5.5.x/Dockerfile)
+-   [`10.3` (10.3/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/10.3/Dockerfile)
+-   [`10.2` (10.2/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/10.2/Dockerfile)
+-   [`10.1` (10.1/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/10.1/Dockerfile)
+-   [`10.0` (10.0/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/10.0/Dockerfile)
+-   [`5.5` (5.5/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/5.5/Dockerfile)
 
 Overview
 --------
