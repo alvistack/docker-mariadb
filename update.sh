@@ -6,7 +6,9 @@ HEAD=$(git rev-parse --abbrev-ref HEAD)
 BRANCHES=$(git branch -l | egrep -v -e '(develop|master)' | sed 's/\s*//g')
 
 for BRANCH in $BRANCHES; do
-    git merge master $BRANCH
+    git checkout $BRANCH
+    git rebase master
+    git merge --no-commit
 done
 
 git checkout $HEAD
