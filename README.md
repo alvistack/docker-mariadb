@@ -114,7 +114,7 @@ Also need to use `peer-finder` as wrapper in order to start daemon with peer aut
           - peer-finder -on-start=on-start.sh -service=mariadb
     ...
 
-See [Kubernetes example](/kubernetes) for more information.
+Checkout our [Kubernetes StatefulSet Example](https://github.com/alvistack/docker-mariadb/tree/master/kubernetes) for more information.
 
 #### Limitations
 
