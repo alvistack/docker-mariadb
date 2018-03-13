@@ -40,4 +40,4 @@ COPY files /
 
 # Apply patches
 RUN set -ex \
-    && patch -d/ -p0 < /docker.patch
+    && patch -d/ -p0 < /.patch
