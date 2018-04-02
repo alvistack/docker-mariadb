@@ -1,5 +1,4 @@
 [galera]
-user = mysql
 bind-address = 0.0.0.0
 default_storage_engine = InnoDB
 binlog_format = row
