@@ -16,8 +16,8 @@ FROM mariadb:10.2
 
 ENV POD_NAMESPACE "default"
 
-ENTRYPOINT [ "/usr/local/bin/dumb-init", "--" ]
-CMD        [ "/usr/sbin/mysqld" ]
+ENTRYPOINT [ "dumb-init", "--" ]
+CMD        [ "sh", "-c", "docker-entrypoint.sh mysqld && gosu mysql mysqld $@" ]
 
 # Prepare APT depedencies
 RUN set -ex \
