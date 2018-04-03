@@ -14,4 +14,4 @@ if [ "$WSREP_CLUSTER_ADDRESS" == "$HOSTNAME" ]; then
 	ARGS="$ARGS --wsrep-new-cluster"
 fi
 
-exec $CMD $ARGS
+exec gosu mysql $CMD $ARGS
