@@ -40,6 +40,20 @@ Start MariaDB:
     # Pull latest image
     docker pull alvistack/mariadb
 
+    # Run as detach
+    docker run \
+        -itd \
+        --name mariadb \
+        --publish 3306:3306 \
+        --volume /var/lib/mysql:/var/lib/mysql \
+        --env MYSQL_ROOT_PASSWORD=Passw0rd\! \
+        alvistack/mariadb
+
+Alternativly, if you hope to split the database initialization then start daemon manually:
+
+    # Pull latest image
+    docker pull alvistack/mariadb
+
     # To initialize VOLUME
     docker run \
         -it \
@@ -60,7 +74,7 @@ Start MariaDB:
         --publish 4568:4568 \
         --volume /var/lib/mysql:/var/lib/mysql \
         alvistack/mariadb \
-        mysqld --wsrep-new-cluster --wsrep-cluster-address=gcomm://
+        gosu mysql mysqld --wsrep-new-cluster --wsrep-cluster-address=gcomm://
 
 **Success**. MariaDB is now available on port 3306.
 
