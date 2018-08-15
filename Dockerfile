@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM mariadb:10.2
+FROM mariadb:10.3
 
 ENV POD_NAMESPACE "default"
 
