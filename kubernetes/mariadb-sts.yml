@@ -27,7 +27,7 @@ spec:
                   key: MYSQL_ROOT_PASSWORD
           args:
             - /bin/sh
-            - -c 
+            - -c
             - docker-entrypoint.sh mysqld --wsrep-new-cluster --wsrep-cluster-address=gcomm://
           volumeMounts:
             - name: mariadb-pvc-var-lib-mysql
@@ -54,7 +54,7 @@ spec:
                   fieldPath: metadata.namespace
           args:
             - /bin/sh
-            - -c 
+            - -c
             - peer-finder -on-start=on-start.sh -service=mariadb
           readinessProbe:
             exec:
