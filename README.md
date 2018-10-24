@@ -1,5 +1,4 @@
-Docker Image Packaging for MariaDB
-==================================
+# Docker Image Packaging for MariaDB
 
 [![Travis](https://img.shields.io/travis/alvistack/docker-mariadb.svg)](https://travis-ci.org/alvistack/docker-mariadb)
 [![GitHub release](https://img.shields.io/github/release/alvistack/docker-mariadb.svg)](https://github.com/alvistack/docker-mariadb/releases)
@@ -10,30 +9,28 @@ MariaDB is a community-developed fork of the MySQL relational database managemen
 
 Learn more about MariaDB: <https://mariadb.org/>
 
-Supported Tags and Respective `Dockerfile` Links
-------------------------------------------------
+## Supported Tags and Respective `Dockerfile` Links
 
--   [`latest` (master/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/master/Dockerfile)
--   [`10.3` (10.3/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/10.3/Dockerfile)
--   [`10.2` (10.2/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/10.2/Dockerfile)
--   [`10.1` (10.1/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/10.1/Dockerfile)
--   [`10.0` (10.0/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/10.0/Dockerfile)
--   [`5.5` (5.5/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/5.5/Dockerfile)
+  - [`latest` (master/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/master/Dockerfile)
+  - [`10.3` (10.3/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/10.3/Dockerfile)
+  - [`10.2` (10.2/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/10.2/Dockerfile)
+  - [`10.1` (10.1/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/10.1/Dockerfile)
+  - [`10.0` (10.0/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/10.0/Dockerfile)
+  - [`5.5` (5.5/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/5.5/Dockerfile)
 
-Overview
---------
+## Overview
 
 This Docker container makes it easy to get an instance of MariaDB up and running.
 
 Based on [Official MariaDB Docker Image](https://hub.docker.com/_/mariadb/) with some hack for use cases in [Kubernetes StatefulSet](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/):
 
--   Handle `ENTRYPOINT` with [dumb-init](https://github.com/Yelp/dumb-init)
--   `docker-entrypoint.sh` will *NOT* handle the start of PID 1, therefore you could execute it independently with [Kubernetes Init Containers](https://kubernetes.io/docs/concepts/workloads/pods/init-containers/) for initializing [MySQL Data Directory](https://dev.mysql.com/doc/refman/5.7/en/data-directory.html)
--   Use [Kubernetes Peer Finder](https://github.com/kubernetes/contrib/tree/master/peer-finder) to start the actual database instance with auto peer discovery
+  - Handle `ENTRYPOINT` with [dumb-init](https://github.com/Yelp/dumb-init)
+  - `docker-entrypoint.sh` will *NOT* handle the start of PID 1, therefore you could execute it independently with [Kubernetes Init Containers](https://kubernetes.io/docs/concepts/workloads/pods/init-containers/) for initializing [MySQL Data Directory](https://dev.mysql.com/doc/refman/5.7/en/data-directory.html)
+  - Use [Kubernetes Peer Finder](https://github.com/kubernetes/contrib/tree/master/peer-finder) to start the actual database instance with auto peer discovery
 
 ### Quick Start
 
-For the `VOLUME` directory that is used to store the repository data (amongst other things) we recommend mounting a host directory as a [data volume](https://docs.docker.com/engine/tutorials/dockervolumes/#/data-volumes), or via a named volume if using a docker version &gt;= 1.9.
+For the `VOLUME` directory that is used to store the repository data (amongst other things) we recommend mounting a host directory as a [data volume](https://docs.docker.com/engine/tutorials/dockervolumes/#/data-volumes), or via a named volume if using a docker version \>= 1.9.
 
 Start MariaDB:
 
@@ -149,21 +146,17 @@ The namespace this pod is running in, used by `peer-finder` when running as Kube
 
 Default: `default`
 
-Versioning
-----------
+## Versioning
 
 The `latest` tag matches the most recent version of this repository. Thus using `alvistack/mariadb:latest` or `alvistack/mariadb` will ensure you are running the most up to date version of this image.
 
-License
--------
+## License
 
--   Code released under [Apache License 2.0](LICENSE)
--   Docs released under [CC BY 4.0](http://creativecommons.org/licenses/by/4.0/)
+  - Code released under [Apache License 2.0](LICENSE)
+  - Docs released under [CC BY 4.0](http://creativecommons.org/licenses/by/4.0/)
 
-Author Information
-------------------
+## Author Information
 
--   Wong Hoi Sing Edison
-    -   <https://twitter.com/hswong3i>
-    -   <https://github.com/hswong3i>
-
+  - Wong Hoi Sing Edison
+      - <https://twitter.com/hswong3i>
+      - <https://github.com/hswong3i>
