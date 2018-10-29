@@ -36,7 +36,7 @@ Start MariaDB:
 
     # Pull latest image
     docker pull alvistack/mariadb
-
+    
     # Run as detach
     docker run \
         -itd \
@@ -50,7 +50,7 @@ Alternativly, if you hope to split the database initialization then start daemon
 
     # Pull latest image
     docker pull alvistack/mariadb
-
+    
     # To initialize VOLUME
     docker run \
         -it \
@@ -60,7 +60,7 @@ Alternativly, if you hope to split the database initialization then start daemon
         --env MYSQL_ROOT_PASSWORD=Passw0rd\! \
         alvistack/mariadb \
         docker-entrypoint.sh mysqld --wsrep-new-cluster --wsrep-cluster-address=gcomm://
-
+    
     # Run as detach
     docker run \
         -itd \
