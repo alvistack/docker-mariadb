@@ -1,8 +1,18 @@
 # Docker Image Packaging for MariaDB
 
-## 10.3.10-0alvistack3 - TBC
+## 10.4.x-0alvistack1 - TBC
+
+### Major Changes
+
+## 10.4.0-0alvistack3 - 2018-12-15
+
+### Major Changes
+
+  - Add MariaDB 10.4 support
 
 ## 10.3.10-0alvistack2 - 2018-10-29
+
+### Major Changes
 
   - Upgrade Docker base image to mariadb:10.3
   - Update dumb-init to v.1.2.2
