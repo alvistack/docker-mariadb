@@ -16,8 +16,8 @@ FROM mariadb:10.4
 
 ENV POD_NAMESPACE "default"
 
-ENTRYPOINT [ "dumb-init", "--" ]
-CMD        [ "sh", "-c", "docker-entrypoint.sh mysqld && gosu mysql mysqld $@" ]
+ENTRYPOINT [ "dumb-init", "--", "docker-entrypoint.sh" ]
+CMD        [ "mysqld" ]
 
 # Prepare APT dependencies
 RUN set -ex \
@@ -37,7 +37,3 @@ RUN set -ex \
 
 # Copy files
 COPY files /
-
-# Apply patches
-RUN set -ex \
-    && patch -d / -p1 < /.patch
