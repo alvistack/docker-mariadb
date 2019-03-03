@@ -7,6 +7,7 @@
   - Revamp ENTRYPOINT so could pass <https://github.com/docker-library/official-images>
   - Add default `wsrep_cluster_address` with `gcomm://`
   - Change default `wsrep_sst_method` from `rsync` to `xtrabackup-v2`
+  - Add some debug utils
 
 ## 10.4.0-0alvistack3 - 2018-12-15
 

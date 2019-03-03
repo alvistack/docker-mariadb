@@ -22,7 +22,7 @@ CMD        [ "mysqld" ]
 # Prepare APT dependencies
 RUN set -ex \
     && apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y curl patch \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y curl htop less patch vim wget \
     && rm -rf /var/lib/apt/lists/*
 
 # Install dumb-init
