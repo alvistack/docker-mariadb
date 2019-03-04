@@ -16,4 +16,4 @@ if [ "$WSREP_CLUSTER_ADDRESS" == "$HOSTNAME" ]; then
     ARGS="$ARGS --wsrep-new-cluster"
 fi
 
-exec docker-entrypoint.sh $ARGS
+exec docker-entrypoint.sh mysqld $ARGS
