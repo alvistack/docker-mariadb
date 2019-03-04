@@ -4,6 +4,13 @@
 
 ### Major Changes
 
+  - Revamp ENTRYPOINT so could pass <https://github.com/docker-library/official-images>
+  - Revamp `/usr/local/bin/on-start.sh`, align with ENTRYPOINT changes
+  - Add default `wsrep_cluster_address` with `gcomm://`
+  - Add `/var/log/mysql/error.log`
+  - Add `/var/log/on-start.sh.log`
+  - Add some debug utils
+
 ## 10.4.0-0alvistack3 - 2018-12-15
 
 ### Major Changes

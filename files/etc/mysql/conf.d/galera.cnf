@@ -1,11 +1,13 @@
 [galera]
 bind-address = 0.0.0.0
+binlog_format = ROW
 default_storage_engine = InnoDB
-binlog_format = row
 innodb_autoinc_lock_mode = 2
 innodb_flush_log_at_trx_commit = 2
 innodb_lock_schedule_algorithm = FCFS
+log_error = /var/log/mysql/error.log
+wsrep_cluster_address = gcomm://
 wsrep_on = ON
 wsrep_provider = /usr/lib/galera/libgalera_smm.so
-wsrep_sst_method = rsync
 wsrep_retry_autocommit = 3
+wsrep_sst_method = rsync

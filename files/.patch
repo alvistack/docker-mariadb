@@ -1,9 +1,0 @@
-diff -urp a/usr/local/bin/docker-entrypoint.sh b/usr/local/bin/docker-entrypoint.sh
---- a/usr/local/bin/docker-entrypoint.sh	2018-03-12 17:55:03.652836080 +0800
-+++ b/usr/local/bin/docker-entrypoint.sh	2018-03-12 17:55:15.248984735 +0800
-@@ -187,5 +187,3 @@ if [ "$1" = 'mysqld' -a -z "$wantHelp" ]
- 		echo
- 	fi
- fi
--
--exec "$@"
