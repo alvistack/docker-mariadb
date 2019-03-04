@@ -26,7 +26,6 @@ This Docker container makes it easy to get an instance of MariaDB up and running
 Based on [Official MariaDB Docker Image](https://hub.docker.com/_/mariadb/) with some hack for use cases in [Kubernetes StatefulSet](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/):
 
   - Handle `ENTRYPOINT` with [dumb-init](https://github.com/Yelp/dumb-init)
-  - `docker-entrypoint.sh` will *NOT* handle the start of PID 1, therefore you could execute it independently with [Kubernetes Init Containers](https://kubernetes.io/docs/concepts/workloads/pods/init-containers/) for initializing [MySQL Data Directory](https://dev.mysql.com/doc/refman/5.7/en/data-directory.html)
   - Use [Kubernetes Peer Finder](https://github.com/kubernetes/contrib/tree/master/peer-finder) to start the actual database instance with auto peer discovery
 
 ### Quick Start
@@ -46,33 +45,6 @@ Start MariaDB:
         --volume /var/lib/mysql:/var/lib/mysql \
         --env MYSQL_ROOT_PASSWORD=Passw0rd\! \
         alvistack/mariadb
-
-Alternativly, if you hope to split the database initialization then start daemon manually:
-
-    # Pull latest image
-    docker pull alvistack/mariadb
-    
-    # To initialize VOLUME
-    docker run \
-        -it \
-        --rm \
-        --name mariadb \
-        --volume /var/lib/mysql:/var/lib/mysql \
-        --env MYSQL_ROOT_PASSWORD=Passw0rd\! \
-        alvistack/mariadb \
-        docker-entrypoint.sh mysqld --wsrep-new-cluster --wsrep-cluster-address=gcomm://
-    
-    # Run as detach
-    docker run \
-        -itd \
-        --name mariadb \
-        --publish 3306:3306 \
-        --publish 4444:4444 \
-        --publish 4567:4567 \
-        --publish 4568:4568 \
-        --volume /var/lib/mysql:/var/lib/mysql \
-        alvistack/mariadb \
-        gosu mysql mysqld --wsrep-new-cluster --wsrep-cluster-address=gcomm://
 
 **Success**. MariaDB is now available on port 3306.
 
@@ -116,6 +88,13 @@ Also need to use `peer-finder` as wrapper in order to start daemon with peer aut
           - containerPort: 4567
           - containerPort: 4568
         env:
+          - name: MYSQL_DATABASE
+            value: "default"
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mariadb
+                key: MYSQL_ROOT_PASSWORD
           - name: POD_NAMESPACE
             valueFrom:
               fieldRef:
