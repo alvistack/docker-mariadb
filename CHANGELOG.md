@@ -4,6 +4,10 @@
 
 ### Major Changes
 
+## 10.4.3-0alvistack2 - 2019-03-18
+
+### Major Changes
+
   - Revamp ENTRYPOINT so could pass <https://github.com/docker-library/official-images>
   - Revamp `/usr/local/bin/on-start.sh`, align with ENTRYPOINT changes
   - Add default `wsrep_cluster_address` with `gcomm://`
