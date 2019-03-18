@@ -28,11 +28,13 @@ RUN set -ex \
 # Install dumb-init
 RUN set -ex \
     && curl -skL https://github.com/Yelp/dumb-init/releases/download/v1.2.2/dumb-init_1.2.2_amd64 > /usr/local/bin/dumb-init \
+    && echo "c16e45a301234c732af4c38be1e1000a2ce1cba8 /usr/local/bin/dumb-init" | sha1sum -c - \
     && chmod 0755 /usr/local/bin/dumb-init
 
 # Install peer-finder
 RUN set -ex \
     && curl -skL https://storage.googleapis.com/kubernetes-release/pets/peer-finder > /usr/local/bin/peer-finder \
+    && echo "5abfeabdd8c011ddf6b0abf33011c5866ff7eb39 /usr/local/bin/peer-finder" | sha1sum -c - \
     && chmod 0755 /usr/local/bin/peer-finder
 
 # Copy files
