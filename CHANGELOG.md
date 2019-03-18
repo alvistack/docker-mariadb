@@ -10,6 +10,7 @@
   - Add `/var/log/mysql/error.log`
   - Add `/var/log/on-start.sh.log`
   - Add some debug utils
+  - Add checksum for curl
 
 ## 10.4.0-0alvistack3 - 2018-12-15
 
