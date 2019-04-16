@@ -1,8 +1,14 @@
 # Docker Image Packaging for MariaDB
 
-## 10.4.x-0alvistack1 - TBC
+## 10.4.4-0alvistackx - TBC
 
 ### Major Changes
+
+## 10.4.4-0alvistack1 - 2019-04-16
+
+### Major Changes
+
+  - Improve checksum handling
 
 ## 10.4.3-0alvistack2 - 2019-03-18
 
