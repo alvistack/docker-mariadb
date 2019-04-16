@@ -14,7 +14,11 @@
 
 FROM mariadb:10.4
 
-ENV POD_NAMESPACE "default"
+ENV DUMB_INIT_DOWNLOAD_URL        "https://github.com/Yelp/dumb-init/releases/download/v1.2.2/dumb-init_1.2.2_amd64"
+ENV DUMB_INIT_DOWNLOAD_CHECKSUM   "c16e45a301234c732af4c38be1e1000a2ce1cba8"
+ENV PEER_FINDER_DOWNLOAD_URL      "https://storage.googleapis.com/kubernetes-release/pets/peer-finder"
+ENV PEER_FINDER_DOWNLOAD_CHECKSUM "5abfeabdd8c011ddf6b0abf33011c5866ff7eb39"
+ENV POD_NAMESPACE                 "default"
 
 ENTRYPOINT [ "dumb-init", "--", "docker-entrypoint.sh" ]
 CMD        [ "mysqld" ]
@@ -27,14 +31,16 @@ RUN set -ex \
 
 # Install dumb-init
 RUN set -ex \
-    && curl -skL https://github.com/Yelp/dumb-init/releases/download/v1.2.2/dumb-init_1.2.2_amd64 > /usr/local/bin/dumb-init \
-    && echo "c16e45a301234c732af4c38be1e1000a2ce1cba8 /usr/local/bin/dumb-init" | sha1sum -c - \
+    && curl -skL $DUMB_INIT_DOWNLOAD_URL > /usr/local/bin/dumb-init \
+    && sha1sum /usr/local/bin/dumb-init \
+    && echo "$DUMB_INIT_DOWNLOAD_CHECKSUM /usr/local/bin/dumb-init" | sha1sum -c - \
     && chmod 0755 /usr/local/bin/dumb-init
 
 # Install peer-finder
 RUN set -ex \
-    && curl -skL https://storage.googleapis.com/kubernetes-release/pets/peer-finder > /usr/local/bin/peer-finder \
-    && echo "5abfeabdd8c011ddf6b0abf33011c5866ff7eb39 /usr/local/bin/peer-finder" | sha1sum -c - \
+    && curl -skL $PEER_FINDER_DOWNLOAD_URL > /usr/local/bin/peer-finder \
+    && sha1sum /usr/local/bin/peer-finder \
+    && echo "$PEER_FINDER_DOWNLOAD_CHECKSUM /usr/local/bin/peer-finder" | sha1sum -c - \
     && chmod 0755 /usr/local/bin/peer-finder
 
 # Copy files
