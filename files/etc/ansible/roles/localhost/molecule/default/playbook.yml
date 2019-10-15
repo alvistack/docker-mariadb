@@ -17,13 +17,18 @@
 - hosts: all
   remote_user: root
   roles:
+    - role: bootstrap
+    - role: locales
+    - role: timezone
+    - role: python
+    - role: ansible
     - role: dumb-init
     - role: gosu
 
 - hosts: all
   remote_user: root
   roles:
+    - role: kubernetes-peer-finder
     - role: mariadb
       mariadb_release: "{{ lookup('env', 'MARIADB_RELEASE') }}"
-    - role: kubernetes-peer-finder
     - role: localhost
