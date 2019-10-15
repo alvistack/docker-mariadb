@@ -12,36 +12,58 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM mariadb:10.4
+FROM ubuntu:18.04
 
-ENV DUMB_INIT_DOWNLOAD_URL        "https://github.com/Yelp/dumb-init/releases/download/v1.2.2/dumb-init_1.2.2_amd64"
-ENV DUMB_INIT_DOWNLOAD_CHECKSUM   "c16e45a301234c732af4c38be1e1000a2ce1cba8"
-ENV PEER_FINDER_DOWNLOAD_URL      "https://storage.googleapis.com/kubernetes-release/pets/peer-finder"
-ENV PEER_FINDER_DOWNLOAD_CHECKSUM "5abfeabdd8c011ddf6b0abf33011c5866ff7eb39"
-ENV POD_NAMESPACE                 "default"
+ENV LANG   "en_US.utf8"
+ENV LC_ALL "en_US.utf8"
+ENV SHELL  "/bin/bash"
+ENV TZ     "UTC"
+
+ENV MARIADB_RELEASE "10.4"
+
+VOLUME  /var/lib/mysql
+WORKDIR /var/lib/mysql
+
+EXPOSE 3389
 
 ENTRYPOINT [ "dumb-init", "--", "docker-entrypoint.sh" ]
 CMD        [ "mysqld" ]
 
+# Hotfix for en_US.utf8 locale
+RUN set -ex \
+    && apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get -y install locales \
+    && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Explicitly set system user UID/GID
+RUN set -ex \
+    && groupadd -r mysql \
+    && useradd -r -g mysql -d /nonexistent -M -s /bin/false mysql
+
 # Prepare APT dependencies
 RUN set -ex \
     && apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y curl htop less patch vim wget \
+    && DEBIAN_FRONTEND=noninteractive apt-get -y install ca-certificates curl gcc git libffi-dev libssl-dev lsb-release make python3 python3-dev sudo \
     && rm -rf /var/lib/apt/lists/*
 
-# Install dumb-init
+# Install PIP
 RUN set -ex \
-    && curl -skL $DUMB_INIT_DOWNLOAD_URL > /usr/local/bin/dumb-init \
-    && sha1sum /usr/local/bin/dumb-init \
-    && echo "$DUMB_INIT_DOWNLOAD_CHECKSUM /usr/local/bin/dumb-init" | sha1sum -c - \
-    && chmod 0755 /usr/local/bin/dumb-init
-
-# Install peer-finder
-RUN set -ex \
-    && curl -skL $PEER_FINDER_DOWNLOAD_URL > /usr/local/bin/peer-finder \
-    && sha1sum /usr/local/bin/peer-finder \
-    && echo "$PEER_FINDER_DOWNLOAD_CHECKSUM /usr/local/bin/peer-finder" | sha1sum -c - \
-    && chmod 0755 /usr/local/bin/peer-finder
+    && curl -skL https://bootstrap.pypa.io/get-pip.py | python3
 
 # Copy files
 COPY files /
+
+# Bootstrap with Ansible
+RUN set -ex \
+    && cd /etc/ansible/roles/localhost \
+    && pip3 install --upgrade --ignore-installed --requirement requirements.txt \
+    && molecule dependency \
+    && molecule lint \
+    && molecule syntax \
+    && molecule converge \
+    && molecule verify \
+    && rm -rf /var/cache/ansible/* \
+    && rm -rf /root/.cache/* \
+    && rm -rf /tmp/* \
+    && rm -rf /var/lib/apt/lists/*

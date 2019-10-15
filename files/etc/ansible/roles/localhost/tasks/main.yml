@@ -1,0 +1,50 @@
+---
+
+# (c) Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+- name: purge /var/lib/mysql
+  shell: |
+    set -o pipefail
+    find /var/lib/mysql -mindepth 1 -delete
+  args:
+    executable: "/bin/bash"
+  register: result
+  changed_when: result is not succeeded
+  ignore_errors: true
+  tags: localhost
+
+- name: prepare directories
+  file:
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default('root') }}"
+    mode: "{{ item.mode | default('0755') }}"
+    state: "{{ item.state | default('directory') }}"
+  loop:
+    - { dest: "/etc/mysql" }
+    - { dest: "/var/lib/mysql", owner: "mysql", group: "mysql" }
+    - { dest: "/var/run/mysqld", owner: "mysql", group: "mysql", mode: "0777" }
+  tags: localhost
+
+- name: copy templates
+  template:
+    dest: "{{ item.dest }}"
+    src: "{{ item.src | default('./templates' + item.dest + '.j2') }}"
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default('root') }}"
+    mode: "{{ item.mode | default('0644') }}"
+  loop:
+    - { dest: "/etc/mysql/my.cnf" }
+  tags: localhost

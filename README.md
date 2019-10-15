@@ -16,8 +16,6 @@ Learn more about MariaDB: <https://mariadb.org/>
   - [`10.3` (10.3/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/10.3/Dockerfile)
   - [`10.2` (10.2/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/10.2/Dockerfile)
   - [`10.1` (10.1/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/10.1/Dockerfile)
-  - [`10.0` (10.0/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/10.0/Dockerfile)
-  - [`5.5` (5.5/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/5.5/Dockerfile)
 
 ## Overview
 

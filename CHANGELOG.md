@@ -1,8 +1,14 @@
 # Docker Image Packaging for MariaDB
 
-## 10.4.4-0alvistackx - TBC
+## 10.4.8-1alvistackx - TBC
 
 ### Major Changes
+
+## 10.4.8-1alvistack1 - 2019-10-15
+
+### Major Changes
+
+  - Revamp as Ansible based
 
 ## 10.4.4-0alvistack3 - 2019-05-20
 
