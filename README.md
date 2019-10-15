@@ -21,7 +21,7 @@ Learn more about MariaDB: <https://mariadb.org/>
 
 This Docker container makes it easy to get an instance of MariaDB up and running.
 
-Based on [Official MariaDB Docker Image](https://hub.docker.com/_/mariadb/) with some hack for use cases in [Kubernetes StatefulSet](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/):
+Based on [Official Ubuntu Docker Image](https://hub.docker.com/_/ubuntu/) with some minor hack:
 
   - Handle `ENTRYPOINT` with [dumb-init](https://github.com/Yelp/dumb-init)
   - Use [Kubernetes Peer Finder](https://github.com/kubernetes/contrib/tree/master/peer-finder) to start the actual database instance with auto peer discovery
