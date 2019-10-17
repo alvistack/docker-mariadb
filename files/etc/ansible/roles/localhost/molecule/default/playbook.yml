@@ -28,7 +28,6 @@
 - hosts: all
   remote_user: root
   roles:
-    - role: kubernetes-peer-finder
     - role: mariadb
       mariadb_release: "{{ lookup('env', 'MARIADB_RELEASE') }}"
     - role: localhost

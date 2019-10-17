@@ -35,8 +35,5 @@
 - name: gosu
   src: https://github.com/alvistack/ansible-role-gosu/archive/master.tar.gz
 
-- name: kubernetes-peer-finder
-  src: https://github.com/alvistack/ansible-role-kubernetes-peer-finder/archive/master.tar.gz
-
 - name: mariadb
   src: https://github.com/alvistack/ansible-role-mariadb/archive/master.tar.gz

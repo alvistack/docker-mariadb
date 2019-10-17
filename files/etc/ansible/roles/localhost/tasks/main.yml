@@ -34,8 +34,31 @@
     state: "{{ item.state | default('directory') }}"
   loop:
     - { dest: "/etc/mysql" }
+    - { dest: "/usr/local/bin" }
     - { dest: "/var/lib/mysql", owner: "mysql", group: "mysql" }
     - { dest: "/var/run/mysqld", owner: "mysql", group: "mysql", mode: "0777" }
+    - { dest: "{{ kubernetes_peer_finder_download.dest | dirname }}" }
+  tags: localhost
+
+- name: download archive
+  get_url:
+    url: "{{ item.url }}"
+    dest: "{{ item.dest }}"
+    checksum: "{{ item.checksum }}"
+  loop:
+    - "{{ kubernetes_peer_finder_download }}"
+  register: get_url_result
+  until: get_url_result is succeeded
+  tags: localhost
+
+- name: unarchive package
+  shell: |
+    set -o pipefail
+    cd /usr/local/bin
+    TMP_DIR="`mktemp -d`" && cp {{ kubernetes_peer_finder_download.dest }} $TMP_DIR/peer-finder && mv $TMP_DIR/peer-finder . && rm -rf $TMP_DIR
+  args:
+    executable: "/bin/bash"
+  when: get_url_result is changed
   tags: localhost
 
 - name: copy templates
@@ -47,4 +70,20 @@
     mode: "{{ item.mode | default('0644') }}"
   loop:
     - { dest: "/etc/mysql/my.cnf" }
+    - { dest: "/usr/local/bin/docker-entrypoint.sh", mode: "0755" }
+    - { dest: "/usr/local/bin/on-start.sh", mode: "0755" }
+  tags: localhost
+
+- name: prepare files
+  file:
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default('root') }}"
+    mode: "{{ item.mode | default('0644') }}"
+    state: "{{ item.state | default('file') }}"
+  loop:
+    - { dest: "/etc/mysql/my.cnf" }
+    - { dest: "/usr/local/bin/docker-entrypoint.sh", mode: "0755" }
+    - { dest: "/usr/local/bin/on-start.sh", mode: "0755" }
+    - { dest: "/usr/local/bin/peer-finder", mode: "0755" }
   tags: localhost

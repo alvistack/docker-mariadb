@@ -13,3 +13,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+# Kubernetes peer-finder version.
+kubernetes_peer_finder_version: "latest"
+
+# Kubernetes peer-finder download details.
+kubernetes_peer_finder_download: "{{ _kubernetes_peer_finder_download[kubernetes_peer_finder_version] }}"
