@@ -13,3 +13,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+_kubernetes_peer_finder_download:
+  latest:
+    url: "https://storage.googleapis.com/kubernetes-release/pets/peer-finder"
+    dest: "/var/cache/ansible/peer-finder"
+    checksum: "sha1:5abfeabdd8c011ddf6b0abf33011c5866ff7eb39"
