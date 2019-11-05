@@ -1,8 +1,19 @@
 # Docker Image Packaging for MariaDB
 
-## 10.4.8-1alvistackx - TBC
+## 10.4.8-XalvistackY - TBC
 
 ### Major Changes
+
+## 10.4.8-2alvistack3 - 2019-11-05
+
+### Major Changes
+
+  - Upgrade minimal Ansible support to 2.9.0
+  - Upgrade Travis CI test as Ubuntu Bionic based
+  - Default with Python 3
+  - Hotfix for en\_US.utf8 locale
+  - Install peer-finder for Kubernetes manually
+  - Remove MariaDB 10.1 support
 
 ## 10.4.8-1alvistack1 - 2019-10-15
 
