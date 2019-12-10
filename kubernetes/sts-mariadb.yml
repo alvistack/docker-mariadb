@@ -1,7 +1,10 @@
-piVersion: apps/v1
+---
+apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: mariadb
+  labels:
+    service: mariadb
 spec:
   serviceName: mariadb
   replicas: 3
@@ -15,33 +18,23 @@ spec:
       labels:
         service: mariadb
     spec:
-      initContainers:
-        - name: bootstrap
-          image: alvistack/mariadb:latest
-          imagePullPolicy: Always
-          env:
-            - name: MYSQL_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: mariadb
-                  key: MYSQL_ROOT_PASSWORD
-          args:
-            - /bin/sh
-            - -c
-            - docker-entrypoint.sh mysqld --wsrep-new-cluster --wsrep-cluster-address=gcomm://
-          volumeMounts:
-            - name: mariadb-pvc-var-lib-mysql
-              mountPath: "/var/lib/mysql"
       containers:
         - name: mariadb
-          image: alvistack/mariadb:latest
-          imagePullPolicy: Always
+          image: docker.io/alvistack/mariadb:develop
+          resources:
+            requests:
+              cpu: 100m
+              memory: 511M
+            limits:
+              memory: 512M
           ports:
             - containerPort: 3306
             - containerPort: 4444
             - containerPort: 4567
             - containerPort: 4568
           env:
+            - name: MYSQL_DATABASE
+              value: "default"
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -59,19 +52,28 @@ spec:
           readinessProbe:
             exec:
               command:
-                - /bin/bash
+                - /bin/sh
                 - -c
                 - mysql -uroot -p$MYSQL_ROOT_PASSWORD -e "SELECT 1"
-            initialDelaySeconds: 15
-            timeoutSeconds: 5
-            successThreshold: 2
-            failureThreshold: 300
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - mysql -uroot -p$MYSQL_ROOT_PASSWORD -e "SELECT 1"
+            initialDelaySeconds: 30
           volumeMounts:
-            - name: mariadb-pvc-var-lib-mysql
-              mountPath: "/var/lib/mysql"
+            - mountPath: /etc/mysql/mariadb.conf.d
+              name: etc-mysql-mariadb-conf-d
+            - mountPath: /var/lib/mysql
+              name: var-lib-mysql
+      volumes:
+        - name: etc-mysql-mariadb-conf-d
+          configMap:
+            name: etc-mysql-mariadb-conf-d
   volumeClaimTemplates:
     - metadata:
-        name: mariadb-pvc-var-lib-mysql
+        name: var-lib-mysql
       spec:
         accessModes:
           - ReadWriteOnce
