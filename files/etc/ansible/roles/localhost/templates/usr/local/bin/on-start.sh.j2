@@ -9,6 +9,18 @@ LOG_FILE="/var/log/${0##*/}.log"
 
 exec 1> >(tee -a $LOG_FILE) 2>&1
 
+if [ ! -d "/var/lib/mysql/mysql" ]; then
+    docker-entrypoint.sh mysqld --wsrep-new-cluster --wsrep-cluster-address=gcomm:// &
+    PID="$!"
+    while true; do
+        if grep "MySQL init process done. Ready for start up." $LOG_FILE; then
+            break
+        fi
+        sleep 1
+    done
+    kill -s TERM "$PID"
+fi
+
 HOSTNAME=$(hostname -f)
 WSREP_CLUSTER_ADDRESS=$(tee | paste -sd , -)
 ARGS="--wsrep-cluster-address=gcomm://$WSREP_CLUSTER_ADDRESS"
