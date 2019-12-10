@@ -11,14 +11,13 @@ exec 1> >(tee -a $LOG_FILE) 2>&1
 
 if [ ! -d "/var/lib/mysql/mysql" ]; then
     docker-entrypoint.sh mysqld --wsrep-new-cluster --wsrep-cluster-address=gcomm:// &
-    PID="$!"
     while true; do
-        if grep "MySQL init process done. Ready for start up." $LOG_FILE; then
+        if grep "MySQL init process done." $LOG_FILE; then
             break
         fi
         sleep 1
     done
-    kill -s TERM "$PID"
+    killall -s TERM mysqld
 fi
 
 HOSTNAME=$(hostname -f)
