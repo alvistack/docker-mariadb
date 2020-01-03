@@ -29,5 +29,4 @@
   remote_user: root
   roles:
     - role: mariadb
-      mariadb_release: "{{ lookup('env', 'MARIADB_RELEASE') }}"
     - role: localhost
