@@ -1,14 +1,5 @@
 # {{ ansible_managed }}
 
-# MariaDB-specific config file.
-# Read by /etc/mysql/my.cnf
-
-[client]
-default_character_set = utf8mb4
-
-[mysql]
-default_character_set = utf8mb4
-
 [mysqld]
 bind_address = 0.0.0.0
 binlog_format = ROW
@@ -32,6 +23,3 @@ wsrep_on = ON
 wsrep_provider = /usr/lib/galera/libgalera_smm.so
 wsrep_retry_autocommit = 3
 wsrep_sst_method = rsync
-
-# Import all .cnf files from configuration directory
-!includedir /etc/mysql/mariadb.conf.d/
