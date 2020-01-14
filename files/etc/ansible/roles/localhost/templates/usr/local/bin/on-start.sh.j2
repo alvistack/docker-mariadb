@@ -12,7 +12,7 @@ exec 1> >(tee -a $LOG_FILE) 2>&1
 if [ ! -d "/var/lib/mysql/mysql" ]; then
     docker-entrypoint.sh mysqld --wsrep-new-cluster --wsrep-cluster-address=gcomm:// &
     while sleep 1; do
-        if grep "MySQL init process done." $LOG_FILE; then
+        if grep "MySQL init process done. Ready for start up." $LOG_FILE; then
             exit 0
         fi
     done

@@ -69,8 +69,9 @@
     owner: "{{ item.owner | default('root') }}"
     group: "{{ item.group | default('root') }}"
     mode: "{{ item.mode | default('0644') }}"
+    backup: true
   loop:
-    - { dest: "/etc/mysql/conf.d/mysqld.cnf" }
+    - { dest: "/etc/mysql/my.cnf" }
     - { dest: "/usr/local/bin/on-start.sh", mode: "0755" }
   tags: localhost
 
@@ -82,7 +83,7 @@
     mode: "{{ item.mode | default('0644') }}"
     state: "{{ item.state | default('file') }}"
   loop:
-    - { dest: "/etc/mysql/conf.d/mysqld.cnf" }
+    - { dest: "/etc/mysql/my.cnf" }
     - { dest: "/usr/local/bin/on-start.sh", mode: "0755" }
     - { dest: "/usr/local/bin/peer-finder", mode: "0755" }
   tags: localhost
