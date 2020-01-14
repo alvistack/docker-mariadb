@@ -1,0 +1,88 @@
+# {{ ansible_managed }}
+
+[client]
+default_character_set          = utf8mb4
+port                           = 3306
+socket                         = /var/run/mysqld/mysqld.sock
+
+[mysqld_safe]
+nice                           = 0
+socket                         = /var/run/mysqld/mysqld.sock
+
+[mysqld]
+basedir                        = /usr
+bind_address                   = 0.0.0.0
+binlog_format                  = ROW
+binlog_row_image               = MINIMAL
+character_set_server           = utf8mb4
+collation_server               = utf8mb4_general_ci
+concurrent_insert              = ALWAYS
+connect_timeout                = 5
+datadir                        = /var/lib/mysql
+default_storage_engine         = InnoDB
+expire_logs_days               = 10
+innodb_autoinc_lock_mode       = 2
+innodb_buffer_pool_size        = 128M
+innodb_file_per_table          = 1
+innodb_flush_log_at_trx_commit = 2
+innodb_flush_method            = O_DIRECT
+innodb_io_capacity             = 512
+innodb_log_buffer_size         = 8M
+innodb_open_files              = 512
+key_buffer_size                = 32M
+lc_messages                    = en_US
+lc_messages_dir                = /usr/share/mysql
+log_bin                        = /var/log/mysql/mariadb-bin
+log_bin_index                  = /var/log/mysql/mariadb-bin.index
+log_error                      = /proc/self/fd/2
+log_slow_verbosity             = query_plan
+log_warnings                   = 2
+long_query_time                = 10
+max_allowed_packet             = 128M
+max_binlog_size                = 128M
+max_connections                = 128
+max_heap_table_size            = 32M
+pid_file                       = /var/run/mysqld/mysqld.pid
+port                           = 3306
+query_cache_limit              = 8M
+query_cache_size               = 32M
+read_buffer_size               = 8M
+read_rnd_buffer_size           = 8M
+skip_external_locking          = 1
+skip_name_resolve              = 1
+slow_query_log_file            = /proc/self/fd/2
+socket                         = /var/run/mysqld/mysqld.sock
+sort_buffer_size               = 8M
+sql_mode                       = NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+table_open_cache               = 512
+thread_cache_size              = 256
+tmp_table_size                 = 32M
+tmpdir                         = /tmp
+user                           = mysql
+wait_timeout                   = 600
+
+[galera]
+bind_address                   = 0.0.0.0
+binlog_format                  = ROW
+binlog_row_image               = MINIMAL
+default_storage_engine         = InnoDB
+innodb_autoinc_lock_mode       = 2
+innodb_flush_log_at_trx_commit = 2
+wsrep_cluster_address          = gcomm://
+wsrep_on                       = ON
+wsrep_provider                 = /usr/lib/galera/libgalera_smm.so
+wsrep_retry_autocommit         = 3
+wsrep_sst_method               = rsync
+
+[mysqldump]
+max_allowed_packet             = 128M
+quick
+quote_names
+
+[mysql]
+
+[isamchk]
+key_buffer                     = 128M
+
+!include /etc/mysql/mariadb.cnf
+!includedir /etc/mysql/conf.d/
