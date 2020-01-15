@@ -26,7 +26,7 @@ WORKDIR /var/lib/mysql
 
 EXPOSE 3389
 
-ENTRYPOINT [ "dumb-init", "--", "docker-entrypoint.sh" ]
+ENTRYPOINT [ "tini", "-g", "--", "docker-entrypoint.sh" ]
 CMD        [ "mysqld" ]
 
 # Hotfix for en_US.utf8 locale

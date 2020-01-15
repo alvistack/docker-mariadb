@@ -1,8 +1,18 @@
 # Docker Image Packaging for MariaDB
 
-## 10.4.8-XalvistackY - TBC
+## 10.4.11-XalvistackY - TBC
 
 ### Major Changes
+
+## 10.4.11-3alvistack1 - 2020-01-15
+
+### Major Changes
+
+  - Replace `dumb-init` with `tini`, as like as `docker --init`
+  - Include release specific vars and tasks
+  - Revamp template for `/etc/mysql/my.cnf`
+  - Backport `/usr/local/bin/docker-entrypoint.sh` from upstream
+  - Debug `/usr/local/bin/on-start.sh` for Kubernetes
 
 ## 10.4.8-2alvistack3 - 2019-11-05
 
