@@ -56,7 +56,10 @@
   shell: |
     set -o pipefail
     cd /usr/local/bin
-    TMP_DIR="`mktemp -d`" && cp {{ kubernetes_peer_finder_download.dest }} $TMP_DIR/peer-finder && mv $TMP_DIR/peer-finder . && rm -rf $TMP_DIR
+    TMP_DIR="`mktemp -d`" \
+      && cp {{ kubernetes_peer_finder_download.dest }} $TMP_DIR/peer-finder \
+      && mv $TMP_DIR/peer-finder . \
+      && rm -rf $TMP_DIR
   args:
     executable: "/bin/bash"
   when: get_url_result is changed
