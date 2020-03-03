@@ -33,6 +33,7 @@
     mode: "{{ item.mode | default('0755') }}"
     state: "{{ item.state | default('directory') }}"
   loop:
+    - { dest: "/docker-entrypoint-initdb.d" }
     - { dest: "/etc/mysql" }
     - { dest: "/usr/local/bin" }
     - { dest: "/var/lib/mysql", owner: "mysql", group: "mysql" }
