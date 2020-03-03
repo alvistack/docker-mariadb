@@ -19,16 +19,6 @@ ENV LC_ALL "en_US.utf8"
 ENV SHELL  "/bin/bash"
 ENV TZ     "UTC"
 
-ENV MARIADB_RELEASE "{{ mariadb_release }}"
-
-VOLUME  "/var/lib/mysql"
-WORKDIR "/var/lib/mysql"
-
-EXPOSE 3389
-
-ENTRYPOINT [ "tini", "-g", "--", "docker-entrypoint.sh" ]
-CMD        [ "mysqld" ]
-
 # Hotfix for systemd
 RUN set -ex \
     && apt-get update \
@@ -48,6 +38,16 @@ RUN set -ex \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y locales \
     && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 \
     && rm -rf /var/lib/apt/lists/*
+
+ENV MARIADB_RELEASE "{{ mariadb_release }}"
+
+VOLUME  "/var/lib/mysql"
+WORKDIR "/var/lib/mysql"
+
+EXPOSE 3389
+
+ENTRYPOINT [ "tini", "-g", "--", "docker-entrypoint.sh" ]
+CMD        [ "mysqld" ]
 
 # Explicitly set system user UID/GID
 RUN set -ex \
