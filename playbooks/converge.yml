@@ -17,8 +17,7 @@
 - hosts: all
   remote_user: root
   tasks:
-    - include_tasks:
-        file: "./tasks/pre_tasks.yml"
+    - include_tasks: "./tasks/pre_tasks.yml"
 
     - include_role:
         name: bootstrap
@@ -41,5 +40,4 @@
     - include_role:
         name: mariadb
 
-    - include_tasks:
-        file: "./tasks/post_tasks.yml"
+    - include_tasks: "./tasks/post_tasks.yml"
