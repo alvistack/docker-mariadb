@@ -11,10 +11,9 @@ Learn more about MariaDB: <https://mariadb.org/>
 
 ## Supported Tags and Respective `Dockerfile` Links
 
-  - [`latest` (master/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/master/Dockerfile)
-  - [`10.4` (10.4/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/10.4/Dockerfile)
-  - [`10.3` (10.3/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/10.3/Dockerfile)
-  - [`10.2` (10.2/Dockerfile)](https://github.com/alvistack/docker-mariadb/blob/10.2/Dockerfile)
+  - [`10.4`, `latest`](https://github.com/alvistack/docker-mariadb/blob/master/molecule/10.4/Dockerfile.j2)
+  - [`10.3`](https://github.com/alvistack/docker-mariadb/blob/master/molecule/10.3/Dockerfile.j2)
+  - [`10.2`](https://github.com/alvistack/docker-mariadb/blob/master/molecule/10.2/Dockerfile.j2)
 
 ## Overview
 
@@ -22,6 +21,8 @@ This Docker container makes it easy to get an instance of MariaDB up and running
 
 Based on [Official Ubuntu Docker Image](https://hub.docker.com/_/ubuntu/) with some minor hack:
 
+  - Minimized `Dockerfile` for meta data definition
+  - Provision by Ansible and Molecule Docker driver in single layer
   - Handle `ENTRYPOINT` with [tini](https://github.com/krallin/tini)
   - Use [Kubernetes Peer Finder](https://github.com/kubernetes/contrib/tree/master/peer-finder) to start the actual database instance with auto peer discovery
 
