@@ -1,10 +1,15 @@
 # Docker Image Packaging for MariaDB
 
-## 10.4.11-XalvistackY - TBC
+## 10.4.12-XalvistackY - TBC
+
+### Major Changes
+
+## 10.4.12-4alvistack1 - 2020-03-04
 
 ### Major Changes
 
   - Revamp with Molecule and `docker commit`
+  - Hotfix for systemd
 
 ## 10.4.11-3alvistack1 - 2020-01-15
 
