@@ -14,21 +14,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-namespace: alvistack
-name: docker-mariadb
-description: Docker Image Packaging for MariaDB
-
-version: VERSION
-readme: README.md
-license: Apache-2.0
-
-repository: https://github.com/alvistack/docker-mariadb
-documentation: https://github.com/alvistack/docker-mariadb
-homepage: https://github.com/alvistack/docker-mariadb
-issues: https://github.com/alvistack/docker-mariadb/issues
-
-dependencies: {}
-tags:
-  - system
-authors:
-  - Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
+- import_playbook: ../../playbooks/converge.yml
