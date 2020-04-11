@@ -1,6 +1,6 @@
 # Docker Image Packaging for MariaDB
 
-[![Travis](https://img.shields.io/travis/alvistack/docker-mariadb.svg)](https://travis-ci.org/alvistack/docker-mariadb)
+[![Travis](https://img.shields.io/travis/com/alvistack/docker-mariadb.svg)](https://travis-ci.com/alvistack/docker-mariadb)
 [![GitHub release](https://img.shields.io/github/release/alvistack/docker-mariadb.svg)](https://github.com/alvistack/docker-mariadb/releases)
 [![GitHub license](https://img.shields.io/github/license/alvistack/docker-mariadb.svg)](https://github.com/alvistack/docker-mariadb/blob/master/LICENSE)
 [![Docker Pulls](https://img.shields.io/docker/pulls/alvistack/mariadb.svg)](https://hub.docker.com/r/alvistack/mariadb/)
@@ -132,7 +132,7 @@ The `latest` tag matches the most recent [GitHub Release](https://github.com/alv
 
 ### `alvistack/mariadb:<version>`
 
-The version tags are rolling release rebuild by [Travis](https://travis-ci.org/alvistack/docker-mariadb) in weekly basis. Thus using these tags will ensure you are running the latest packages provided by the base image project.
+The version tags are rolling release rebuild by [Travis](https://travis-ci.com/alvistack/docker-mariadb) in weekly basis. Thus using these tags will ensure you are running the latest packages provided by the base image project.
 
 ## License
 
