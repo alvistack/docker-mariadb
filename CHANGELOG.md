@@ -1,14 +1,11 @@
 # Docker Image Packaging for MariaDB
 
-## 10.4.12-XalvistackY - TBC
+## 10.5.2-XalvistackY - TBC
 
 ### Major Changes
 
-## 10.4.12-4alvistack9 - 2020-04-11
-
-### Major Changes
-
-  - Provision with systemd support
+  - Rename `post_tasks.yml` as `side_effect.yml`
+  - Upgrade base image to Ubuntu 20.04
 
 ## 10.4.12-4alvistack4 - 2020-03-05
 
