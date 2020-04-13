@@ -8,9 +8,9 @@ language: shell
 
 env:
   jobs:
+    - MOLECULE_SCENARIO_NAME="10.5"
     - MOLECULE_SCENARIO_NAME="10.4"
     - MOLECULE_SCENARIO_NAME="10.3"
-    - MOLECULE_SCENARIO_NAME="10.2"
 
 before_install:
   - |
