@@ -1,7 +1,3 @@
-[submodule "roles/bootstrap"]
-	path = roles/bootstrap
-	url = https://github.com/alvistack/ansible-role-bootstrap.git
-	branch = develop
 [submodule "roles/gosu"]
 	path = roles/gosu
 	url = https://github.com/alvistack/ansible-role-gosu.git
