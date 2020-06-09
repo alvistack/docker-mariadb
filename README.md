@@ -23,7 +23,7 @@ Based on [Official Ubuntu Docker Image](https://hub.docker.com/_/ubuntu/) with s
 
   - Minimized `Dockerfile` for meta data definition
   - Provision by Ansible and Molecule Docker driver in single layer
-  - Handle `ENTRYPOINT` with [tini](https://github.com/krallin/tini)
+  - Handle `ENTRYPOINT` with [catatonit](https://github.com/openSUSE/catatonit)
   - Use [Kubernetes Peer Finder](https://github.com/kubernetes/contrib/tree/master/peer-finder) to start the actual database instance with auto peer discovery
 
 ### Quick Start
