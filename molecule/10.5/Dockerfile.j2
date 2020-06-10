@@ -47,7 +47,7 @@ WORKDIR "/var/lib/mysql"
 
 EXPOSE 3389
 
-ENTRYPOINT [ "tini", "-g", "--", "docker-entrypoint.sh" ]
+ENTRYPOINT [ "catatonit", "-g", "--", "docker-entrypoint.sh" ]
 CMD        [ "mysqld" ]
 
 # Explicitly set system user UID/GID

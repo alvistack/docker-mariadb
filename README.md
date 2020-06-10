@@ -11,8 +11,8 @@ Learn more about MariaDB: <https://mariadb.org/>
 
 ## Supported Tags and Respective `Dockerfile` Links
 
-  - [`10.5`](https://github.com/alvistack/docker-mariadb/blob/master/molecule/10.5/Dockerfile.j2)
-  - [`10.4`, `latest`](https://github.com/alvistack/docker-mariadb/blob/master/molecule/10.4/Dockerfile.j2)
+  - [`10.5`, `latest`](https://github.com/alvistack/docker-mariadb/blob/master/molecule/10.5/Dockerfile.j2)
+  - [`10.4`](https://github.com/alvistack/docker-mariadb/blob/master/molecule/10.4/Dockerfile.j2)
   - [`10.3`](https://github.com/alvistack/docker-mariadb/blob/master/molecule/10.3/Dockerfile.j2)
 
 ## Overview
@@ -23,7 +23,7 @@ Based on [Official Ubuntu Docker Image](https://hub.docker.com/_/ubuntu/) with s
 
   - Minimized `Dockerfile` for meta data definition
   - Provision by Ansible and Molecule Docker driver in single layer
-  - Handle `ENTRYPOINT` with [tini](https://github.com/krallin/tini)
+  - Handle `ENTRYPOINT` with [catatonit](https://github.com/openSUSE/catatonit)
   - Use [Kubernetes Peer Finder](https://github.com/kubernetes/contrib/tree/master/peer-finder) to start the actual database instance with auto peer discovery
 
 ### Quick Start
