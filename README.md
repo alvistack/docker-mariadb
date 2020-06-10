@@ -11,8 +11,8 @@ Learn more about MariaDB: <https://mariadb.org/>
 
 ## Supported Tags and Respective `Dockerfile` Links
 
-  - [`10.5`](https://github.com/alvistack/docker-mariadb/blob/master/molecule/10.5/Dockerfile.j2)
-  - [`10.4`, `latest`](https://github.com/alvistack/docker-mariadb/blob/master/molecule/10.4/Dockerfile.j2)
+  - [`10.5`, `latest`](https://github.com/alvistack/docker-mariadb/blob/master/molecule/10.5/Dockerfile.j2)
+  - [`10.4`](https://github.com/alvistack/docker-mariadb/blob/master/molecule/10.4/Dockerfile.j2)
   - [`10.3`](https://github.com/alvistack/docker-mariadb/blob/master/molecule/10.3/Dockerfile.j2)
 
 ## Overview
