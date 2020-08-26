@@ -1,9 +1,14 @@
 # Docker Image Packaging for MariaDB
 
-## 10.5.3-XalvistackY - TBC
+## 10.5.5-XalvistackY - TBC
 
 ### Major Changes
 
+## 10.5.5-4alvistack1 - 2020-08-26
+
+### Major Changes
+
+  - Upgrade minimal Ansible Lint support to 4.3.2
   - Upgrade Travis CI test as Ubuntu Focal based
   - Upgrade minimal Ansible support to 2.10.0
 
