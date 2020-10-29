@@ -4,6 +4,8 @@
 
 ### Major Changes
 
+  - Revamp with Packer
+
 ## 10.5.5-4alvistack4 - 2020-10-14
 
 ### Major Changes
