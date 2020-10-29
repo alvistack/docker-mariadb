@@ -46,6 +46,7 @@
     - name: purge /var/lib/mysql
       shell: |
         set -o pipefail
+        mkdir -p /var/lib/mysql
         find /var/lib/mysql -mindepth 1 -delete
       args:
         executable: "/bin/bash"
