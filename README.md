@@ -9,11 +9,11 @@ MariaDB is a community-developed fork of the MySQL relational database managemen
 
 Learn more about MariaDB: <https://mariadb.org/>
 
-## Supported Tags and Respective `Dockerfile` Links
+## Supported Tags and Respective Packer Template Links
 
-  - [`10.5`, `latest`](https://github.com/alvistack/docker-mariadb/blob/master/molecule/10.5/Dockerfile.j2)
-  - [`10.4`](https://github.com/alvistack/docker-mariadb/blob/master/molecule/10.4/Dockerfile.j2)
-  - [`10.3`](https://github.com/alvistack/docker-mariadb/blob/master/molecule/10.3/Dockerfile.j2)
+  - [`10.5`, `latest`](https://github.com/alvistack/docker-mariadb/blob/master/packer/10.5/packer.json)
+  - [`10.4`](https://github.com/alvistack/docker-mariadb/blob/master/packer/10.4/packer.json)
+  - [`10.3`](https://github.com/alvistack/docker-mariadb/blob/master/packer/10.3/packer.json)
 
 ## Overview
 
@@ -21,8 +21,7 @@ This Docker container makes it easy to get an instance of MariaDB up and running
 
 Based on [Official Ubuntu Docker Image](https://hub.docker.com/_/ubuntu/) with some minor hack:
 
-  - Minimized `Dockerfile` for meta data definition
-  - Provision by Ansible and Molecule Docker driver in single layer
+  - Packaging by Packer Docker builder and Ansible provisioner in single layer
   - Handle `ENTRYPOINT` with [catatonit](https://github.com/openSUSE/catatonit)
   - Use [Kubernetes Peer Finder](https://github.com/kubernetes/contrib/tree/master/peer-finder) to start the actual database instance with auto peer discovery
 
