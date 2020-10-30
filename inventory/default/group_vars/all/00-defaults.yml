@@ -15,5 +15,8 @@
 # limitations under the License.
 
 mariadb_release: "10.5"
-kubernetes_peer_finder_version: "latest"
-kubernetes_peer_finder_download: "{{ _kubernetes_peer_finder_download[kubernetes_peer_finder_version] }}"
+
+kubernetes_peer_finder_download:
+  url: "https://storage.googleapis.com/kubernetes-release/pets/peer-finder"
+  dest: "{{ ansible_user_dir }}/.ansible/tmp/peer-finder-latest"
+  checksum: "sha1:5abfeabdd8c011ddf6b0abf33011c5866ff7eb39"

@@ -18,36 +18,21 @@
   remote_user: root
   become: true
   tasks:
-    - name: include default variables
-      include_vars: "./vars/main.yml"
+    - name: groupadd
+      group:
+        name: "mysql"
+        system: true
+        state: "present"
 
-    - name: include release specific variables
-      include_vars: "{{ lookup('first_found', _params) }}"
-      vars:
-        _params:
-          files:
-            - "{{ ansible_distribution | lower }}-{{ ansible_distribution_version | lower }}.yml"
-            - "{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
-            - "{{ ansible_os_family | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
-            - "{{ ansible_distribution | lower }}.yml"
-            - "{{ ansible_os_family | lower }}.yml"
-          paths:
-            - "./vars"
-      ignore_errors: true
-
-    - name: include release specific tasks
-      include_tasks: "{{ lookup('first_found', _params) }}"
-      vars:
-        _params:
-          files:
-            - "{{ ansible_distribution | lower }}-{{ ansible_distribution_version | lower }}.yml"
-            - "{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
-            - "{{ ansible_os_family | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
-            - "{{ ansible_distribution | lower }}.yml"
-            - "{{ ansible_os_family | lower }}.yml"
-          paths:
-            - "./tasks"
-      ignore_errors: true
+    - name: useradd
+      user:
+        name: "mysql"
+        group: "mysql"
+        home: "/nonexistent"
+        shell: "/bin/false"
+        system: true
+        create_home: false
+        state: "present"
 
     - name: prepare directories
       file:
@@ -96,3 +81,100 @@
 
     - include_role:
         name: mariadb
+
+    - name: stop service
+      service:
+        name: "mariadb"
+        state: "stopped"
+        enabled: true
+      changed_when: false
+      ignore_errors: true
+
+    - name: purge /var/lib/mysql
+      shell: |
+        set -o pipefail
+        mkdir -p /var/lib/mysql
+        find /var/lib/mysql -mindepth 1 -delete
+      args:
+        executable: "/bin/bash"
+      register: result
+      changed_when: result is not succeeded
+      ignore_errors: true
+
+    - name: re-create /var/run/mysqld
+      shell: |
+        set -o pipefail
+        rm -rf /var/run/mysqld
+        mkdir -p /var/run/mysqld
+        chown -Rf mysql:mysql /var/run/mysqld
+        chmod 0777 /var/run/mysqld
+      args:
+        executable: "/bin/bash"
+      register: result
+      changed_when: result is not succeeded
+      ignore_errors: true
+
+    - name: prepare directories
+      file:
+        dest: "{{ item.dest }}"
+        owner: "{{ item.owner | default('root') }}"
+        group: "{{ item.group | default('root') }}"
+        mode: "{{ item.mode | default('0755') }}"
+        state: "{{ item.state | default('directory') }}"
+      loop:
+        - { dest: "/docker-entrypoint-initdb.d" }
+        - { dest: "/etc/mysql" }
+        - { dest: "/usr/local/bin" }
+        - { dest: "/var/lib/mysql", owner: "mysql", group: "mysql" }
+        - { dest: "/var/run/mysqld", owner: "mysql", group: "mysql", mode: "0777" }
+        - { dest: "{{ kubernetes_peer_finder_download.dest | dirname }}" }
+
+    - name: download archive
+      vars:
+        ansible_python_interpreter: "python3"
+      get_url:
+        url: "{{ item.url }}"
+        dest: "{{ item.dest }}"
+        checksum: "{{ item.checksum }}"
+        timeout: 300
+      loop:
+        - "{{ kubernetes_peer_finder_download }}"
+      register: get_url_result
+      until: get_url_result is succeeded
+
+    - name: unarchive package
+      shell: |
+        set -o pipefail
+        cd /usr/local/bin
+        TMP_DIR="$(mktemp -d)" \
+          && cp {{ kubernetes_peer_finder_download.dest }} $TMP_DIR/peer-finder \
+          && chown -Rf root:root $TMP_DIR/peer-finder \
+          && chmod 0755 $TMP_DIR/peer-finder \
+          && mv $TMP_DIR/peer-finder . \
+          && rm -rf $TMP_DIR
+      args:
+        executable: "/bin/bash"
+      when: get_url_result is changed
+
+    - name: copy templates
+      template:
+        dest: "{{ item.dest }}"
+        src: "{{ item.src | default('./templates' + item.dest + '.j2') }}"
+        owner: "{{ item.owner | default('root') }}"
+        group: "{{ item.group | default('root') }}"
+        mode: "{{ item.mode | default('0644') }}"
+      loop:
+        - { dest: "/etc/mysql/my.cnf" }
+        - { dest: "/usr/local/bin/on-start.sh", mode: "0755" }
+
+    - name: prepare files
+      file:
+        dest: "{{ item.dest }}"
+        owner: "{{ item.owner | default('root') }}"
+        group: "{{ item.group | default('root') }}"
+        mode: "{{ item.mode | default('0644') }}"
+        state: "{{ item.state | default('file') }}"
+      loop:
+        - { dest: "/etc/mysql/my.cnf" }
+        - { dest: "/usr/local/bin/on-start.sh", mode: "0755" }
+        - { dest: "/usr/local/bin/peer-finder", mode: "0755" }
