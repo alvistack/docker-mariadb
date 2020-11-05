@@ -1,6 +1,6 @@
 # Docker Image Packaging for MariaDB
 
-## 10.5.5-XalvistackY - TBC
+## 10.5.7-XalvistackY - TBC
 
 ### Major Changes
 
