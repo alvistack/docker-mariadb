@@ -92,7 +92,7 @@
 
     - name: purge /var/lib/mysql
       shell: |
-        set -o pipefail
+        set -euo pipefail
         mkdir -p /var/lib/mysql
         find /var/lib/mysql -mindepth 1 -delete
       args:
@@ -103,7 +103,7 @@
 
     - name: re-create /var/run/mysqld
       shell: |
-        set -o pipefail
+        set -euo pipefail
         rm -rf /var/run/mysqld
         mkdir -p /var/run/mysqld
         chown -Rf mysql:mysql /var/run/mysqld
@@ -144,7 +144,7 @@
 
     - name: unarchive package
       shell: |
-        set -o pipefail
+        set -euo pipefail
         cd /usr/local/bin
         TMP_DIR="$(mktemp -d)" \
           && cp {{ kubernetes_peer_finder_download.dest }} $TMP_DIR/peer-finder \
