@@ -2,7 +2,7 @@
 
 # {{ ansible_managed }}
 
-set -o pipefail
+set -euo pipefail
 
 PID_FILE="/var/run/${0##*/}.pid"
 LOG_FILE="/var/log/${0##*/}.log"
