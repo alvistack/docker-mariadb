@@ -1,6 +1,6 @@
 # Docker Image Packaging for MariaDB
 
-[![Travis](https://img.shields.io/travis/com/alvistack/docker-mariadb.svg)](https://travis-ci.com/alvistack/docker-mariadb)
+[![Gitlab pipeline status](https://img.shields.io/gitlab/pipeline/alvistack/docker-mariadb/master)](https://gitlab.com/alvistack/docker-mariadb/-/pipelines)
 [![GitHub release](https://img.shields.io/github/release/alvistack/docker-mariadb.svg)](https://github.com/alvistack/docker-mariadb/releases)
 [![GitHub license](https://img.shields.io/github/license/alvistack/docker-mariadb.svg)](https://github.com/alvistack/docker-mariadb/blob/master/LICENSE)
 [![Docker Pulls](https://img.shields.io/docker/pulls/alvistack/mariadb.svg)](https://hub.docker.com/r/alvistack/mariadb/)
