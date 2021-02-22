@@ -4,10 +4,7 @@
 
 set -euo pipefail
 
-PID_FILE="/var/run/${0##*/}.pid"
-LOG_FILE="/var/log/${0##*/}.log"
-
-exec 1> >(tee -a $LOG_FILE) 2>&1
+exec 1> >(tee -a /proc/self/fd/2) 2>&1
 
 if [ ! -d "/var/lib/mysql/mysql" ]; then
     docker-entrypoint.sh mysqld --wsrep-new-cluster --wsrep-cluster-address=gcomm:// &
