@@ -134,23 +134,16 @@
         - { dest: "/var/lib/mysql", owner: "mysql", group: "mysql" }
         - { dest: "/var/run/mysqld", owner: "mysql", group: "mysql", mode: "0777" }
         - { dest: "{{ kubernetes_peer_finder_download.dest | dirname }}" }
+      notify:
+        - download archive
 
-    - name: download archive
-      vars:
-        ansible_python_interpreter: "python3"
-      get_url:
-        url: "{{ item.url }}"
-        dest: "{{ item.dest }}"
-        checksum: "{{ item.checksum }}"
-        timeout: 300
-      loop:
-        - "{{ kubernetes_peer_finder_download }}"
-      register: get_url_result
-      until: get_url_result is succeeded
+    - name: flush handlers
+      meta: flush_handlers
 
     - name: unarchive package
       shell: |
         set -euo pipefail
+        exec &> >(tee -a {{ kubernetes_peer_finder_download.dest }}.log)
         cd /usr/local/bin
         TMP_DIR="$(mktemp -d)" \
           && cp {{ kubernetes_peer_finder_download.dest }} $TMP_DIR/peer-finder \
@@ -160,7 +153,7 @@
           && rm -rf $TMP_DIR
       args:
         executable: "/bin/bash"
-      when: get_url_result is changed
+        creates: "{{ kubernetes_peer_finder_download.dest }}.log"
 
     - name: copy templates
       template:
@@ -184,3 +177,17 @@
         - { dest: "/etc/mysql/my.cnf" }
         - { dest: "/usr/local/bin/on-start.sh", mode: "0755" }
         - { dest: "/usr/local/bin/peer-finder", mode: "0755" }
+
+  handlers:
+    - name: download archive
+      vars:
+        ansible_python_interpreter: "python3"
+      get_url:
+        url: "{{ item.url }}"
+        dest: "{{ item.dest }}"
+        checksum: "{{ item.checksum }}"
+        timeout: 300
+      loop:
+        - "{{ kubernetes_peer_finder_download }}"
+      register: result
+      until: result is succeeded

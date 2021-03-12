@@ -18,5 +18,5 @@ mariadb_release: "10.5"
 
 kubernetes_peer_finder_download:
   url: "https://storage.googleapis.com/kubernetes-release/pets/peer-finder"
-  dest: "{{ ansible_user_dir }}/.ansible/tmp/peer-finder-latest"
-  checksum: "sha1:5abfeabdd8c011ddf6b0abf33011c5866ff7eb39"
+  dest: "/var/cache/ansible/230e96b4e6ae962c465b86553e2b4ccbc989efc6da7b2a93520f4f97a87e8e1c/peer-finder"
+  checksum: "sha256:230e96b4e6ae962c465b86553e2b4ccbc989efc6da7b2a93520f4f97a87e8e1c"
