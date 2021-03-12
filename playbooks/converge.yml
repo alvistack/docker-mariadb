@@ -64,22 +64,28 @@
       loop:
         - { dest: "/usr/local/bin/docker-entrypoint.sh", mode: "0755" }
 
-    - include_role:
+    - name: include role
+      include_role:
         name: python
 
-    - include_role:
+    - name: include role
+      include_role:
         name: locales
 
-    - include_role:
+    - name: include role
+      include_role:
         name: timezone
 
-    - include_role:
+    - name: include role
+      include_role:
         name: catatonit
 
-    - include_role:
+    - name: include role
+      include_role:
         name: gosu
 
-    - include_role:
+    - name: include role
+      include_role:
         name: mariadb
 
     - name: stop service
