@@ -34,36 +34,6 @@
         create_home: false
         state: "present"
 
-    - name: prepare directories
-      file:
-        dest: "{{ item.dest }}"
-        owner: "{{ item.owner | default('root') }}"
-        group: "{{ item.group | default('root') }}"
-        mode: "{{ item.mode | default('0755') }}"
-        state: "{{ item.state | default('directory') }}"
-      loop:
-        - { dest: "/usr/local/bin" }
-
-    - name: copy templates
-      template:
-        dest: "{{ item.dest }}"
-        src: "{{ item.src | default('./templates' + item.dest + '.j2') }}"
-        owner: "{{ item.owner | default('root') }}"
-        group: "{{ item.group | default('root') }}"
-        mode: "{{ item.mode | default('0644') }}"
-      loop:
-        - { dest: "/usr/local/bin/docker-entrypoint.sh", mode: "0755" }
-
-    - name: prepare files
-      file:
-        dest: "{{ item.dest }}"
-        owner: "{{ item.owner | default('root') }}"
-        group: "{{ item.group | default('root') }}"
-        mode: "{{ item.mode | default('0644') }}"
-        state: "{{ item.state | default('file') }}"
-      loop:
-        - { dest: "/usr/local/bin/docker-entrypoint.sh", mode: "0755" }
-
     - name: include role
       include_role:
         name: python
@@ -134,40 +104,6 @@
         - { dest: "/var/lib/mysql", owner: "mysql", group: "mysql" }
         - { dest: "/var/run/mysqld", owner: "mysql", group: "mysql", mode: "0777" }
 
-    - name: download archive
-      shell: |
-        set -euo pipefail
-        TMP_DIR="$(mktemp -d)" \
-          && cd $TMP_DIR \
-          && mkdir -p ./{{ item.dest | dirname }} \
-          && curl -skL -m 300 {{ item.url }} > ./{{ item.dest }} \
-          && echo -n "{{ item.sha256sum }} ./{{ item.dest }}" | sha256sum -c - \
-          && mkdir -p {{ item.dest | dirname }} \
-          && mv ./{{ item.dest }} {{ item.dest }} \
-          && rm -rf $TMP_DIR
-      args:
-        executable: "/bin/bash"
-        creates: "{{ item.dest | dirname }}"
-      loop:
-        - "{{ kubernetes_peer_finder_download }}"
-      register: result
-      until: result is succeeded
-
-    - name: unarchive package
-      shell: |
-        set -euo pipefail
-        exec &> >(tee -a {{ kubernetes_peer_finder_download.dest }}.log)
-        cd /usr/local/bin
-        TMP_DIR="$(mktemp -d)" \
-          && cp {{ kubernetes_peer_finder_download.dest }} $TMP_DIR/peer-finder \
-          && chown -Rf root:root $TMP_DIR/peer-finder \
-          && chmod 0755 $TMP_DIR/peer-finder \
-          && mv $TMP_DIR/peer-finder . \
-          && rm -rf $TMP_DIR
-      args:
-        executable: "/bin/bash"
-        creates: "{{ kubernetes_peer_finder_download.dest }}.log"
-
     - name: copy templates
       template:
         dest: "{{ item.dest }}"
@@ -177,6 +113,7 @@
         mode: "{{ item.mode | default('0644') }}"
       loop:
         - { dest: "/etc/mysql/my.cnf" }
+        - { dest: "/usr/local/bin/docker-entrypoint.sh", mode: "0755" }
         - { dest: "/usr/local/bin/on-start.sh", mode: "0755" }
 
     - name: prepare files
@@ -188,5 +125,5 @@
         state: "{{ item.state | default('file') }}"
       loop:
         - { dest: "/etc/mysql/my.cnf" }
+        - { dest: "/usr/local/bin/docker-entrypoint.sh", mode: "0755" }
         - { dest: "/usr/local/bin/on-start.sh", mode: "0755" }
-        - { dest: "/usr/local/bin/peer-finder", mode: "0755" }
