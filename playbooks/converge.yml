@@ -18,21 +18,39 @@
   remote_user: root
   become: true
   tasks:
-    - name: groupadd
-      group:
-        name: "mysql"
-        system: true
-        state: "present"
+    - name: include default variables
+      include_vars: "./vars/main.yml"
 
-    - name: useradd
-      user:
-        name: "mysql"
-        group: "mysql"
-        home: "/nonexistent"
-        shell: "/bin/false"
-        system: true
-        create_home: false
-        state: "present"
+    - name: include release specific variables
+      include_vars: "{{ lookup('first_found', _params) }}"
+      vars:
+        _params:
+          files:
+            - "{{ ansible_distribution | lower }}-{{ ansible_distribution_version | lower }}.yml"
+            - "{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
+            - "{{ ansible_os_family | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
+            - "{{ ansible_distribution | lower }}.yml"
+            - "{{ ansible_os_family | lower }}.yml"
+          paths:
+            - "./vars"
+      ignore_errors: true
+
+    - name: include release specific tasks
+      include_tasks: "{{ lookup('first_found', _params) }}"
+      vars:
+        _params:
+          files:
+            - "{{ ansible_distribution | lower }}-{{ ansible_distribution_version | lower }}.yml"
+            - "{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
+            - "{{ ansible_os_family | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
+            - "{{ ansible_distribution | lower }}.yml"
+            - "{{ ansible_os_family | lower }}.yml"
+          paths:
+            - "./tasks"
+      ignore_errors: true
+
+    - name: include default tasks
+      include_tasks: "./tasks/main.yml"
 
     - name: include role
       include_role:
@@ -113,7 +131,6 @@
         mode: "{{ item.mode | default('0644') }}"
       loop:
         - { dest: "/etc/mysql/my.cnf" }
-        - { dest: "/usr/local/bin/docker-entrypoint.sh", mode: "0755" }
         - { dest: "/usr/local/bin/on-start.sh", mode: "0755" }
 
     - name: prepare files
@@ -125,5 +142,4 @@
         state: "{{ item.state | default('file') }}"
       loop:
         - { dest: "/etc/mysql/my.cnf" }
-        - { dest: "/usr/local/bin/docker-entrypoint.sh", mode: "0755" }
         - { dest: "/usr/local/bin/on-start.sh", mode: "0755" }
