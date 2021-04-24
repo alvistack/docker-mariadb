@@ -35,7 +35,7 @@ For the `VOLUME` directory that is used to store the repository data (amongst ot
 Start MariaDB:
 
     # Pull latest image
-    docker pull alvistack/mariadb
+    docker pull alvistack/mariadb-10.5
     
     # Run as detach
     docker run \
@@ -44,7 +44,7 @@ Start MariaDB:
         --publish 3306:3306 \
         --volume /var/lib/mysql:/var/lib/mysql \
         --env MYSQL_ROOT_PASSWORD=Passw0rd\! \
-        alvistack/mariadb
+        alvistack/mariadb-10.5
 
 **Success**. MariaDB is now available on port 3306.
 
