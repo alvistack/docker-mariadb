@@ -33,7 +33,7 @@
             - "{{ ansible_os_family | lower }}.yml"
           paths:
             - "./vars"
-      ignore_errors: true
+      failed_when: false
 
     - name: include release specific tasks
       include_tasks: "{{ lookup('first_found', _params) }}"
@@ -47,7 +47,7 @@
             - "{{ ansible_os_family | lower }}.yml"
           paths:
             - "./tasks"
-      ignore_errors: true
+      failed_when: false
 
     - name: include default tasks
       include_tasks: "./tasks/main.yml"
@@ -82,7 +82,7 @@
         state: "stopped"
         enabled: true
       changed_when: false
-      ignore_errors: true
+      failed_when: false
 
     - name: purge /var/lib/mysql
       shell: |
@@ -93,7 +93,7 @@
         executable: "/bin/bash"
       register: result
       changed_when: result is not succeeded
-      ignore_errors: true
+      failed_when: false
 
     - name: re-create /var/run/mysqld
       shell: |
@@ -106,7 +106,7 @@
         executable: "/bin/bash"
       register: result
       changed_when: result is not succeeded
-      ignore_errors: true
+      failed_when: false
 
     - name: prepare directories
       file:
