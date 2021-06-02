@@ -4,6 +4,10 @@
 
 ### Major Changes
 
+## 20210602.1.1 - 2021-06-02
+
+### Major Changes
+
   - Upgrade minimal Ansible support to 4.0.0
 
 ## 20210313.1.1 - 2021-03-13
