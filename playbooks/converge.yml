@@ -98,7 +98,7 @@
 
     - name: purge /var/lib/mysql
       shell: |
-        set -euo pipefail
+        set -euxo pipefail
         mkdir -p /var/lib/mysql
         find /var/lib/mysql -mindepth 1 -delete
       args:
@@ -109,7 +109,7 @@
 
     - name: re-create /var/run/mysqld
       shell: |
-        set -euo pipefail
+        set -euxo pipefail
         rm -rf /var/run/mysqld
         mkdir -p /var/run/mysqld
         chown -Rf mysql:mysql /var/run/mysqld
