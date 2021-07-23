@@ -22,12 +22,9 @@
 
 ### Major Changes
 
-  - Bugfix [ansible-lint
-    `namespace`](https://github.com/ansible-community/ansible-lint/pull/1451)
-  - Bugfix [ansible-lint
-    `no-handler`](https://github.com/ansible-community/ansible-lint/pull/1402)
-  - Bugfix [ansible-lint
-    `unnamed-task`](https://github.com/ansible-community/ansible-lint/pull/1413)
+  - Bugfix [ansible-lint `namespace`](https://github.com/ansible-community/ansible-lint/pull/1451)
+  - Bugfix [ansible-lint `no-handler`](https://github.com/ansible-community/ansible-lint/pull/1402)
+  - Bugfix [ansible-lint `unnamed-task`](https://github.com/ansible-community/ansible-lint/pull/1413)
   - Change GIT tag as per Vagrant Box naming and versioning limitation
 
 ## 10.5.7-4alvistack2 - 2020-12-09
@@ -111,8 +108,7 @@
 
 ### Major Changes
 
-  - Revamp ENTRYPOINT so could pass
-    <https://github.com/docker-library/official-images>
+  - Revamp ENTRYPOINT so could pass <https://github.com/docker-library/official-images>
   - Revamp `/usr/local/bin/on-start.sh`, align with ENTRYPOINT changes
   - Add default `wsrep_cluster_address` with `gcomm://`
   - Add `/var/log/mysql/error.log`
