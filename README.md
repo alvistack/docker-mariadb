@@ -13,12 +13,12 @@ Learn more about MariaDB: <https://mariadb.org/>
 
 ## Supported Tags and Respective Packer Template Links
 
+  - [`alvistack/mariadb-10.6`](https://hub.docker.com/r/alvistack/mariadb-10.6)
+      - [`packer/docker-10.6/packer.json`](https://github.com/alvistack/docker-mariadb/blob/master/packer/docker-10.6/packer.json)
   - [`alvistack/mariadb-10.5`](https://hub.docker.com/r/alvistack/mariadb-10.5)
       - [`packer/docker-10.5/packer.json`](https://github.com/alvistack/docker-mariadb/blob/master/packer/docker-10.5/packer.json)
   - [`alvistack/mariadb-10.4`](https://hub.docker.com/r/alvistack/mariadb-10.4)
       - [`packer/docker-10.4/packer.json`](https://github.com/alvistack/docker-mariadb/blob/master/packer/docker-10.4/packer.json)
-  - [`alvistack/mariadb-10.3`](https://hub.docker.com/r/alvistack/mariadb-10.3)
-      - [`packer/docker-10.3/packer.json`](https://github.com/alvistack/docker-mariadb/blob/master/packer/docker-10.3/packer.json)
 
 ## Overview
 

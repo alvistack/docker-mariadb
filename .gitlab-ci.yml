@@ -105,6 +105,31 @@ default:
   before_script:
     - *script-git-submodule
 
+build:docker-10.6:
+  <<: *job-packer-build
+  stage: build
+  cache:
+    key: "$CI_PIPELINE_ID-docker-10.6"
+    paths:
+      - packer/*/output-docker
+  variables:
+    _PACKER_BUILDER_PROVIDER: "docker"
+    _PACKER_BUILDER_VERSION: "10.6"
+
+deploy:docker-10.6:
+  <<: *job-docker-push
+  stage: deploy
+  cache:
+    key: "$CI_PIPELINE_ID-docker-10.6"
+    paths:
+      - packer/*/output-docker
+    policy: pull
+  variables:
+    _PACKER_BUILDER_PROVIDER: "docker"
+    _PACKER_BUILDER_VERSION: "10.6"
+  needs:
+    - build:docker-10.6
+
 build:docker-10.5:
   <<: *job-packer-build
   stage: build
@@ -154,28 +179,3 @@ deploy:docker-10.4:
     _PACKER_BUILDER_VERSION: "10.4"
   needs:
     - build:docker-10.4
-
-build:docker-10.3:
-  <<: *job-packer-build
-  stage: build
-  cache:
-    key: "$CI_PIPELINE_ID-docker-10.3"
-    paths:
-      - packer/*/output-docker
-  variables:
-    _PACKER_BUILDER_PROVIDER: "docker"
-    _PACKER_BUILDER_VERSION: "10.3"
-
-deploy:docker-10.3:
-  <<: *job-docker-push
-  stage: deploy
-  cache:
-    key: "$CI_PIPELINE_ID-docker-10.3"
-    paths:
-      - packer/*/output-docker
-    policy: pull
-  variables:
-    _PACKER_BUILDER_PROVIDER: "docker"
-    _PACKER_BUILDER_VERSION: "10.3"
-  needs:
-    - build:docker-10.3

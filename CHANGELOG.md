@@ -4,6 +4,9 @@
 
 ### Major Changes
 
+  - Support MariaDB 10.6
+  - Remove MariaDB 10.3 support
+
 ## 20211020.1.1 - 2021-10-20
 
 ### Major Changes
