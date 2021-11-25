@@ -4,6 +4,8 @@
 
 ### Major Changes
 
+  - Upgrade minimal Ansible community package support to 4.9.0
+
   - Support MariaDB 10.6
   - Remove MariaDB 10.3 support
 
