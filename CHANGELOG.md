@@ -4,6 +4,8 @@
 
 ### Major Changes
 
+  - Replace docker with podman
+
 ## 20211231.1.3 - 2021-12-31
 
 ### Major Changes
@@ -12,7 +14,6 @@
   - Support Debian Testing
   - Remove openSUSE Leap 15.2 support
   - Upgrade minimal Ansible community package support to 4.10
-
   - Support MariaDB 10.6
   - Remove MariaDB 10.3 support
 
