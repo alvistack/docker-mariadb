@@ -96,6 +96,17 @@
       changed_when: false
       failed_when: false
 
+    - name: purge /etc/mysql/mariadb.conf.d
+      shell: |
+        set -euxo pipefail
+        mkdir -p /etc/mysql/mariadb.conf.d
+        find /etc/mysql/mariadb.conf.d/ -mindepth 1 -delete
+      args:
+        executable: "/bin/bash"
+      register: result
+      changed_when: result is not succeeded
+      failed_when: false
+
     - name: purge /var/lib/mysql
       shell: |
         set -euxo pipefail
