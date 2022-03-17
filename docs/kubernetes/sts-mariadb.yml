@@ -4,7 +4,7 @@ kind: StatefulSet
 metadata:
   name: mariadb
   labels:
-    ansible.builtin.service: mariadb
+    service: mariadb
 spec:
   serviceName: mariadb
   replicas: 3
@@ -12,11 +12,11 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
-      ansible.builtin.service: mariadb
+      service: mariadb
   ansible.builtin.template:
     metadata:
       labels:
-        ansible.builtin.service: mariadb
+        service: mariadb
     spec:
       containers:
         - name: mariadb
@@ -51,13 +51,13 @@ spec:
             - peer-finder -on-start=on-start.sh -service=mariadb
           readinessProbe:
             exec:
-              ansible.builtin.command:
+              command:
                 - /bin/sh
                 - -c
                 - mysql -uroot -p$MYSQL_ROOT_PASSWORD -e "SELECT 1"
           livenessProbe:
             exec:
-              ansible.builtin.command:
+              command:
                 - /bin/sh
                 - -c
                 - mysql -uroot -p$MYSQL_ROOT_PASSWORD -e "SELECT 1"
