@@ -19,10 +19,10 @@
   become: true
   tasks:
     - name: include default variables
-      include_vars: "./vars/main.yml"
+      ansible.builtin.include_vars: "./vars/main.yml"
 
     - name: include release specific variables
-      include_vars: "{{ _loop_var }}"
+      ansible.builtin.include_vars: "{{ _loop_var }}"
       loop: "{{ query('first_found', _params) }}"
       loop_control:
         loop_var: _loop_var
@@ -61,35 +61,35 @@
       include_tasks: "./tasks/main.yml"
 
     - name: include role
-      include_role:
+      ansible.builtin.include_role:
         name: python
 
     - name: include role
-      include_role:
+      ansible.builtin.include_role:
         name: ansible
 
     - name: include role
-      include_role:
+      ansible.builtin.include_role:
         name: locales
 
     - name: include role
-      include_role:
+      ansible.builtin.include_role:
         name: timezone
 
     - name: include role
-      include_role:
+      ansible.builtin.include_role:
         name: catatonit
 
     - name: include role
-      include_role:
+      ansible.builtin.include_role:
         name: gosu
 
     - name: include role
-      include_role:
+      ansible.builtin.include_role:
         name: mariadb
 
     - name: stop service
-      service:
+      ansible.builtin.service:
         name: "mariadb"
         state: "stopped"
         enabled: true
@@ -97,7 +97,7 @@
       failed_when: false
 
     - name: purge /etc/mysql/mariadb.conf.d
-      shell: |
+      ansible.builtin.shell: |
         set -euxo pipefail
         mkdir -p /etc/mysql/mariadb.conf.d
         find /etc/mysql/mariadb.conf.d/ -mindepth 1 -delete
@@ -108,7 +108,7 @@
       failed_when: false
 
     - name: purge /var/lib/mysql
-      shell: |
+      ansible.builtin.shell: |
         set -euxo pipefail
         mkdir -p /var/lib/mysql
         find /var/lib/mysql -mindepth 1 -delete
@@ -119,7 +119,7 @@
       failed_when: false
 
     - name: re-create /var/run/mysqld
-      shell: |
+      ansible.builtin.shell: |
         set -euxo pipefail
         rm -rf /var/run/mysqld
         mkdir -p /var/run/mysqld
@@ -132,10 +132,10 @@
       failed_when: false
 
     - name: prepare directories
-      file:
+      ansible.builtin.file:
         dest: "{{ item.dest }}"
         owner: "{{ item.owner | default('root') }}"
-        group: "{{ item.group | default('root') }}"
+        ansible.builtin.group: "{{ item.group | default('root') }}"
         mode: "{{ item.mode | default('0755') }}"
         state: "{{ item.state | default('directory') }}"
       loop:
@@ -146,21 +146,21 @@
         - { dest: "/var/run/mysqld", owner: "mysql", group: "mysql", mode: "0777" }
 
     - name: copy templates
-      template:
+      ansible.builtin.template:
         dest: "{{ item.dest }}"
         src: "{{ item.src | default('./templates' + item.dest + '.j2') }}"
         owner: "{{ item.owner | default('root') }}"
-        group: "{{ item.group | default('root') }}"
+        ansible.builtin.group: "{{ item.group | default('root') }}"
         mode: "{{ item.mode | default('0644') }}"
       loop:
         - { dest: "/etc/mysql/my.cnf" }
         - { dest: "/usr/local/bin/on-start.sh", mode: "0755" }
 
     - name: prepare files
-      file:
+      ansible.builtin.file:
         dest: "{{ item.dest }}"
         owner: "{{ item.owner | default('root') }}"
-        group: "{{ item.group | default('root') }}"
+        ansible.builtin.group: "{{ item.group | default('root') }}"
         mode: "{{ item.mode | default('0644') }}"
         state: "{{ item.state | default('file') }}"
       loop:

@@ -4,10 +4,10 @@ kind: Service
 metadata:
   name: mariadb-cluster
   labels:
-    service: mariadb
+    ansible.builtin.service: mariadb
 spec:
   ports:
     - name: mysql
       port: 3306
   selector:
-    service: mariadb
+    ansible.builtin.service: mariadb
