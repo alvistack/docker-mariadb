@@ -6,7 +6,7 @@ metadata:
   annotations:
     service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
   labels:
-    ansible.builtin.service: mariadb
+    service: mariadb
 spec:
   ports:
     - name: mysql
@@ -18,5 +18,5 @@ spec:
     - name: incremental-state-transfer
       port: 4568
   selector:
-    ansible.builtin.service: mariadb
+    service: mariadb
   clusterIP: None

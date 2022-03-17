@@ -40,7 +40,7 @@
           skip: true
 
     - name: include release specific tasks
-      include_tasks: "{{ _loop_var }}"
+      ansible.builtin.include_tasks: "{{ _loop_var }}"
       loop: "{{ query('first_found', _params) }}"
       loop_control:
         loop_var: _loop_var
@@ -58,7 +58,7 @@
           skip: true
 
     - name: include default tasks
-      include_tasks: "./tasks/main.yml"
+      ansible.builtin.include_tasks: "./tasks/main.yml"
 
     - name: include role
       ansible.builtin.include_role:
@@ -135,7 +135,7 @@
       ansible.builtin.file:
         dest: "{{ item.dest }}"
         owner: "{{ item.owner | default('root') }}"
-        ansible.builtin.group: "{{ item.group | default('root') }}"
+        group: "{{ item.group | default('root') }}"
         mode: "{{ item.mode | default('0755') }}"
         state: "{{ item.state | default('directory') }}"
       loop:
@@ -150,7 +150,7 @@
         dest: "{{ item.dest }}"
         src: "{{ item.src | default('./templates' + item.dest + '.j2') }}"
         owner: "{{ item.owner | default('root') }}"
-        ansible.builtin.group: "{{ item.group | default('root') }}"
+        group: "{{ item.group | default('root') }}"
         mode: "{{ item.mode | default('0644') }}"
       loop:
         - { dest: "/etc/mysql/my.cnf" }
@@ -160,7 +160,7 @@
       ansible.builtin.file:
         dest: "{{ item.dest }}"
         owner: "{{ item.owner | default('root') }}"
-        ansible.builtin.group: "{{ item.group | default('root') }}"
+        group: "{{ item.group | default('root') }}"
         mode: "{{ item.mode | default('0644') }}"
         state: "{{ item.state | default('file') }}"
       loop:
