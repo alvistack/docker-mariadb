@@ -5,7 +5,7 @@
 [![GitLab pipeline status](https://img.shields.io/gitlab/pipeline/alvistack/docker-mariadb/master)](https://gitlab.com/alvistack/docker-mariadb/-/pipelines)
 [![GitHub tag](https://img.shields.io/github/tag/alvistack/docker-mariadb.svg)](https://github.com/alvistack/docker-mariadb/tags)
 [![GitHub license](https://img.shields.io/github/license/alvistack/docker-mariadb.svg)](https://github.com/alvistack/docker-mariadb/blob/master/LICENSE)
-[![Docker Pulls](https://img.shields.io/docker/pulls/alvistack/mariadb-10.5.svg)](https://hub.docker.com/r/alvistack/mariadb-10.5)
+[![Docker Pulls](https://img.shields.io/docker/pulls/alvistack/mariadb-10.6.svg)](https://hub.docker.com/r/alvistack/mariadb-10.6)
 
 MariaDB is a community-developed fork of the MySQL relational database management system intended to remain free under the GNU GPL. Being a fork of a leading open source software system, it is notable for being led by the original developers of MySQL, who forked it due to concerns over its acquisition by Oracle. Contributors are required to share their copyright with the MariaDB Foundation.
 
@@ -13,12 +13,12 @@ Learn more about MariaDB: <https://mariadb.org/>
 
 ## Supported Tags and Respective Packer Template Links
 
+  - [`alvistack/mariadb-10.7`](https://hub.docker.com/r/alvistack/mariadb-10.7)
+      - [`packer/docker-10.7/packer.json`](https://github.com/alvistack/docker-mariadb/blob/master/packer/docker-10.7/packer.json)
   - [`alvistack/mariadb-10.6`](https://hub.docker.com/r/alvistack/mariadb-10.6)
       - [`packer/docker-10.6/packer.json`](https://github.com/alvistack/docker-mariadb/blob/master/packer/docker-10.6/packer.json)
   - [`alvistack/mariadb-10.5`](https://hub.docker.com/r/alvistack/mariadb-10.5)
       - [`packer/docker-10.5/packer.json`](https://github.com/alvistack/docker-mariadb/blob/master/packer/docker-10.5/packer.json)
-  - [`alvistack/mariadb-10.4`](https://hub.docker.com/r/alvistack/mariadb-10.4)
-      - [`packer/docker-10.4/packer.json`](https://github.com/alvistack/docker-mariadb/blob/master/packer/docker-10.4/packer.json)
 
 ## Overview
 
@@ -37,7 +37,7 @@ For the `VOLUME` directory that is used to store the repository data (amongst ot
 Start MariaDB:
 
     # Pull latest image
-    docker pull alvistack/mariadb-10.5
+    docker pull alvistack/mariadb-10.6
     
     # Run as detach
     docker run \
@@ -46,7 +46,7 @@ Start MariaDB:
         --publish 3306:3306 \
         --volume /var/lib/mysql:/var/lib/mysql \
         --env MYSQL_ROOT_PASSWORD=Passw0rd\! \
-        alvistack/mariadb-10.5
+        alvistack/mariadb-10.6
 
 **Success**. MariaDB is now available on port 3306.
 
