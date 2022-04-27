@@ -62,31 +62,31 @@
 
     - name: include role
       ansible.builtin.include_role:
-        name: python
+        name: alvistack.python
 
     - name: include role
       ansible.builtin.include_role:
-        name: ansible
+        name: alvistack.ansible
 
     - name: include role
       ansible.builtin.include_role:
-        name: locales
+        name: alvistack.locales
 
     - name: include role
       ansible.builtin.include_role:
-        name: timezone
+        name: alvistack.timezone
 
     - name: include role
       ansible.builtin.include_role:
-        name: catatonit
+        name: alvistack.catatonit
 
     - name: include role
       ansible.builtin.include_role:
-        name: gosu
+        name: alvistack.gosu
 
     - name: include role
       ansible.builtin.include_role:
-        name: mariadb
+        name: alvistack.mariadb
 
     - name: stop service
       ansible.builtin.service:
