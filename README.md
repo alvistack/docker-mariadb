@@ -1,6 +1,6 @@
 # Docker Image Packaging for MariaDB
 
-<img src="/alvistack.svg" width="75" alt="AlviStack">
+<a href="https://alvistack.com" title="AlviStack" target="_blank"><img src="/alvistack.svg" height="75" alt="AlviStack"></a>
 
 [![GitLab pipeline status](https://img.shields.io/gitlab/pipeline/alvistack/docker-mariadb/master)](https://gitlab.com/alvistack/docker-mariadb/-/pipelines)
 [![GitHub tag](https://img.shields.io/github/tag/alvistack/docker-mariadb.svg)](https://github.com/alvistack/docker-mariadb/tags)
