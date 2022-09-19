@@ -15,7 +15,7 @@
 # limitations under the License.
 
 namespace: alvistack
-name: docker-mariadb
+name: mariadb
 description: Docker Image Packaging for MariaDB
 
 version: 0.0.0
