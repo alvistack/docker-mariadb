@@ -98,10 +98,11 @@
       failed_when: false
 
     - name: purge /etc/mysql/mariadb.conf.d
-      ansible.builtin.shell: |
-        set -euxo pipefail
-        mkdir -p /etc/mysql/mariadb.conf.d
-        find /etc/mysql/mariadb.conf.d/ -mindepth 1 -delete
+      ansible.builtin.shell:
+        cmd: |
+          set -euxo pipefail
+          mkdir -p /etc/mysql/mariadb.conf.d
+          find /etc/mysql/mariadb.conf.d/ -mindepth 1 -delete
       args:
         executable: "/bin/bash"
       register: result
@@ -109,10 +110,11 @@
       failed_when: false
 
     - name: purge /var/lib/mysql
-      ansible.builtin.shell: |
-        set -euxo pipefail
-        mkdir -p /var/lib/mysql
-        find /var/lib/mysql -mindepth 1 -delete
+      ansible.builtin.shell:
+        cmd: |
+          set -euxo pipefail
+          mkdir -p /var/lib/mysql
+          find /var/lib/mysql -mindepth 1 -delete
       args:
         executable: "/bin/bash"
       register: result
@@ -120,12 +122,13 @@
       failed_when: false
 
     - name: re-create /var/run/mysqld
-      ansible.builtin.shell: |
-        set -euxo pipefail
-        rm -rf /var/run/mysqld
-        mkdir -p /var/run/mysqld
-        chown -Rf mysql:mysql /var/run/mysqld
-        chmod 0777 /var/run/mysqld
+      ansible.builtin.shell:
+        cmd: |
+          set -euxo pipefail
+          rm -rf /var/run/mysqld
+          mkdir -p /var/run/mysqld
+          chown -Rf mysql:mysql /var/run/mysqld
+          chmod 0777 /var/run/mysqld
       args:
         executable: "/bin/bash"
       register: result
