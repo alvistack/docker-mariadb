@@ -14,16 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-- name: prepare directories
-  ansible.builtin.file:
-    dest: "{{ item.dest }}"
-    owner: "{{ item.owner | default('root') }}"
-    group: "{{ item.group | default('root') }}"
-    mode: "{{ item.mode | default('0755') }}"
-    state: "{{ item.state | default('directory') }}"
-  loop:
-    - { dest: "/usr/local/bin" }
-
 - name: copy templates
   ansible.builtin.template:
     dest: "{{ item.dest }}"
@@ -32,14 +22,24 @@
     group: "{{ item.group | default('root') }}"
     mode: "{{ item.mode | default('0644') }}"
   loop:
-    - { dest: "/usr/local/bin/docker-entrypoint.sh", mode: "0755" }
+    - { dest: "/etc/apt/preferences.d/99-backports.pref" }
+    - { dest: "/etc/apt/sources.list" }
 
-- name: prepare files
-  ansible.builtin.file:
-    dest: "{{ item.dest }}"
-    owner: "{{ item.owner | default('root') }}"
-    group: "{{ item.group | default('root') }}"
-    mode: "{{ item.mode | default('0644') }}"
-    state: "{{ item.state | default('file') }}"
-  loop:
-    - { dest: "/usr/local/bin/docker-entrypoint.sh", mode: "0755" }
+- name: apt-get update
+  ansible.builtin.apt:
+    update_cache: true
+  changed_when: false
+
+- name: apt-get dist-upgrade
+  ansible.builtin.apt:
+    upgrade: "dist"
+  register: result
+  until: result is succeeded
+
+- name: apt-get install
+  ansible.builtin.apt:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  loop: "{{ _apt }}"
+  register: result
+  until: result is succeeded

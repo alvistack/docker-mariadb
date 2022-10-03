@@ -13,7 +13,7 @@
         "CMD [\"mysqld\"]"
       ],
       "commit": true,
-      "image": "ubuntu:20.04",
+      "image": "ubuntu:22.04",
       "privileged": true,
       "type": "docker"
     }
@@ -36,6 +36,14 @@
         "apt-get update",
         "DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y",
         "DEBIAN_FRONTEND=noninteractive apt-get install -y ca-certificates curl gcc hostname iproute2 language-pack-en locales python3 sudo"
+      ],
+      "type": "shell"
+    },
+    {
+      "inline": [
+        "set -eu",
+        "groupadd -r -g 999 mysql",
+        "useradd -r -g 999 -u 999 -d /nonexistent -s /bin/false -M mysql"
       ],
       "type": "shell"
     },
