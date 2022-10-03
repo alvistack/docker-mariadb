@@ -31,6 +31,17 @@
     sh -x -c "ansible --version"
     sh -x -c "ansible-lint --version"
 
+.script-bootstrap-molecule: &script-bootstrap-molecule
+  - |
+    if ! [[ -x "$(command -v molecule)" ]]; then
+      export DEBIAN_FRONTEND="noninteractive"
+      echo "deb http://downloadcontent.opensuse.org/repositories/home:/alvistack/xUbuntu_22.04/ /" | sudo tee /etc/apt/sources.list.d/home:alvistack.list
+      curl -fsSL https://downloadcontent.opensuse.org/repositories/home:alvistack/xUbuntu_22.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_alvistack.gpg > /dev/null
+      sudo -E apt-get update
+      sudo -E apt-get install -y python3-molecule python3-molecule-docker python3-molecule-vagrant
+    fi
+    sh -x -c "molecule --version"
+
 .script-bootstrap-docker: &script-bootstrap-docker
   - |
     if ! [[ -x "$(command -v docker)" ]]; then
@@ -62,8 +73,20 @@
 .script-packer-build: &script-packer-build
   - |
     echo $DOCKER_HUB_TOKEN | sudo -E docker login --username=$DOCKER_HUB_USERNAME --password-stdin
-    cd $CI_PROJECT_DIR/packer/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION
+    cd $CI_PROJECT_DIR/packer/$_IMAGE-$_PROVIDER
     sudo -E packer build packer.json
+
+.script-docker-load: &script-docker-load
+  - |
+    zcat $CI_PROJECT_DIR/packer/$_IMAGE-$_PROVIDER/output-docker/image.tar.gz | sudo -E docker load
+    export _ORG="$CI_PROJECT_NAMESPACE"
+    export _ID="$(sudo -E docker images | awk '{ print $3 }' | awk 'NR==2')"
+    sudo -E docker tag $_ID $_ORG/$_IMAGE:latest
+
+.script-molecule-test: &script-molecule-test
+  - |
+    export _MOLECULE_INSTANCE_NAME="$(pwgen -1AB 12)"
+    sudo -E molecule test -s $_IMAGE-$_PROVIDER
 
 .script-docker-push: &script-docker-push
   - |
@@ -75,10 +98,7 @@
       exit 0
     fi
     echo $DOCKER_HUB_TOKEN | sudo -E docker login --username=$DOCKER_HUB_USERNAME --password-stdin
-    cd $CI_PROJECT_DIR/packer/$_PACKER_BUILDER_PROVIDER-$_PACKER_BUILDER_VERSION
     export _ORG="$CI_PROJECT_NAMESPACE"
-    export _IMAGE="$(echo $CI_PROJECT_NAME | sed 's/^docker-//g')-$_PACKER_BUILDER_VERSION"
-    zcat output-docker/image.tar.gz | sudo -E docker load
     export _ID="$(sudo -E docker images | awk '{ print $3 }' | awk 'NR==2')"
     sudo -E docker tag $_ID $_ORG/$_IMAGE:latest
     sudo -E docker push $_ORG/$_IMAGE:latest
@@ -94,9 +114,19 @@
     - *script-linters
     - *script-packer-build
 
+.job-molecule-test: &job-molecule-test
+  script:
+    - *script-bootstrap-python
+    - *script-bootstrap-ansible
+    - *script-bootstrap-molecule
+    - *script-bootstrap-docker
+    - *script-docker-load
+    - *script-molecule-test
+
 .job-docker-push: &job-docker-push
   script:
     - *script-bootstrap-docker
+    - *script-docker-load
     - *script-docker-push
 
 default:
@@ -104,77 +134,119 @@ default:
   before_script:
     - *script-git-submodule
 
-build:docker-10.8:
+build:mariadb-10.8-docker:
   <<: *job-packer-build
   stage: build
   cache:
-    key: "$CI_PIPELINE_ID-docker-10.8"
+    key: "$CI_PIPELINE_ID-mariadb-10.8-docker"
     paths:
       - packer/*/output-docker
   variables:
-    _PACKER_BUILDER_PROVIDER: "docker"
-    _PACKER_BUILDER_VERSION: "10.8"
+    _IMAGE: "mariadb-10.8"
+    _PROVIDER: "docker"
 
-deploy:docker-10.8:
-  <<: *job-docker-push
-  stage: deploy
+test:mariadb-10.8-docker:
+  <<: *job-molecule-test
+  stage: test
   cache:
-    key: "$CI_PIPELINE_ID-docker-10.8"
+    key: "$CI_PIPELINE_ID-mariadb-10.8-docker"
     paths:
       - packer/*/output-docker
     policy: pull
   variables:
-    _PACKER_BUILDER_PROVIDER: "docker"
-    _PACKER_BUILDER_VERSION: "10.8"
+    _IMAGE: "mariadb-10.8"
+    _PROVIDER: "docker"
   needs:
-    - build:docker-10.8
+    - build:mariadb-10.8-docker
 
-build:docker-10.7:
-  <<: *job-packer-build
-  stage: build
-  cache:
-    key: "$CI_PIPELINE_ID-docker-10.7"
-    paths:
-      - packer/*/output-docker
-  variables:
-    _PACKER_BUILDER_PROVIDER: "docker"
-    _PACKER_BUILDER_VERSION: "10.7"
-
-deploy:docker-10.7:
+deploy:mariadb-10.8-docker:
   <<: *job-docker-push
   stage: deploy
   cache:
-    key: "$CI_PIPELINE_ID-docker-10.7"
+    key: "$CI_PIPELINE_ID-mariadb-10.8-docker"
     paths:
       - packer/*/output-docker
     policy: pull
   variables:
-    _PACKER_BUILDER_PROVIDER: "docker"
-    _PACKER_BUILDER_VERSION: "10.7"
+    _IMAGE: "mariadb-10.8"
+    _PROVIDER: "docker"
   needs:
-    - build:docker-10.7
+    - test:mariadb-10.8-docker
 
-build:docker-10.6:
+build:mariadb-10.7-docker:
   <<: *job-packer-build
   stage: build
   cache:
-    key: "$CI_PIPELINE_ID-docker-10.6"
+    key: "$CI_PIPELINE_ID-mariadb-10.7-docker"
     paths:
       - packer/*/output-docker
   variables:
-    _PACKER_BUILDER_PROVIDER: "docker"
-    _PACKER_BUILDER_VERSION: "10.6"
+    _IMAGE: "mariadb-10.7"
+    _PROVIDER: "docker"
 
-deploy:docker-10.6:
-  <<: *job-docker-push
-  stage: deploy
+test:mariadb-10.7-docker:
+  <<: *job-molecule-test
+  stage: test
   cache:
-    key: "$CI_PIPELINE_ID-docker-10.6"
+    key: "$CI_PIPELINE_ID-mariadb-10.7-docker"
     paths:
       - packer/*/output-docker
     policy: pull
   variables:
-    _PACKER_BUILDER_PROVIDER: "docker"
-    _PACKER_BUILDER_VERSION: "10.6"
+    _IMAGE: "mariadb-10.7"
+    _PROVIDER: "docker"
   needs:
-    - build:docker-10.6
+    - build:mariadb-10.7-docker
+
+deploy:mariadb-10.7-docker:
+  <<: *job-docker-push
+  stage: deploy
+  cache:
+    key: "$CI_PIPELINE_ID-mariadb-10.7-docker"
+    paths:
+      - packer/*/output-docker
+    policy: pull
+  variables:
+    _IMAGE: "mariadb-10.7"
+    _PROVIDER: "docker"
+  needs:
+    - test:mariadb-10.7-docker
+
+build:mariadb-10.6-docker:
+  <<: *job-packer-build
+  stage: build
+  cache:
+    key: "$CI_PIPELINE_ID-mariadb-10.6-docker"
+    paths:
+      - packer/*/output-docker
+  variables:
+    _IMAGE: "mariadb-10.6"
+    _PROVIDER: "docker"
+
+test:mariadb-10.6-docker:
+  <<: *job-molecule-test
+  stage: test
+  cache:
+    key: "$CI_PIPELINE_ID-mariadb-10.6-docker"
+    paths:
+      - packer/*/output-docker
+    policy: pull
+  variables:
+    _IMAGE: "mariadb-10.6"
+    _PROVIDER: "docker"
+  needs:
+    - build:mariadb-10.6-docker
+
+deploy:mariadb-10.6-docker:
+  <<: *job-docker-push
+  stage: deploy
+  cache:
+    key: "$CI_PIPELINE_ID-mariadb-10.6-docker"
+    paths:
+      - packer/*/output-docker
+    policy: pull
+  variables:
+    _IMAGE: "mariadb-10.6"
+    _PROVIDER: "docker"
+  needs:
+    - test:mariadb-10.6-docker

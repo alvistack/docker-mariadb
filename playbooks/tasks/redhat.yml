@@ -1,0 +1,83 @@
+---
+
+# (c) Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+- name: rpm --import
+  ansible.builtin.rpm_key:
+    key: "{{ item.key }}"
+    fingerprint: "{{ item.fingerprint }}"
+    state: "{{ item.state }}"
+  loop: "{{ _rpm_key }}"
+  register: result
+  until: result is succeeded
+
+- name: download archive
+  ansible.builtin.shell:
+    cmd: |
+      set -euxo pipefail
+      mkdir -p /var/log/ansible
+      exec &> >(tee -a /var/log/ansible/{{ item.checksum }}-get_url.log)
+      TMP_DIR="$(mktemp -d)" \
+        && cd $TMP_DIR \
+        && mkdir -p .{{ item.dest | dirname }} \
+        && curl -skL -m 300 {{ item.url }} > .{{ item.dest }} \
+        && echo -n "{{ item.checksum }} .{{ item.dest }}" | sha256sum -c - \
+        && mkdir -p {{ item.dest | dirname }} \
+        && mv .{{ item.dest }} {{ item.dest }} \
+        && rm -rf $TMP_DIR
+  args:
+    executable: "/bin/bash"
+    creates: "/var/log/ansible/{{ item.checksum }}-get_url.log"
+  loop: "{{ _rpm_download }}"
+  register: result
+  until: result is succeeded
+
+- name: yum install
+  ansible.builtin.shell:
+    cmd: |
+      set -euxo pipefail
+      mkdir -p /var/log/ansible
+      exec &> >(tee -a /var/log/ansible/{{ item.checksum }}-unarchive.log)
+      yum install -y {{ item.dest }}
+  args:
+    executable: "/bin/bash"
+    creates: "/var/log/ansible/{{ item.checksum }}-unarchive.log"
+  loop: "{{ _rpm_download }}"
+  changed_when: false
+  failed_when: false
+
+- name: yum-config-manager --enable
+  ansible.builtin.command:
+    cmd: yum-config-manager --{{ item.state }} {{ item.name }}
+  loop: "{{ _yum_config_manager }}"
+  changed_when: false
+  failed_when: false
+
+- name: yum update
+  ansible.builtin.yum:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  loop:
+    - { name: "*", state: "latest" }
+  register: result
+  until: result is succeeded
+
+- name: yum install
+  ansible.builtin.yum:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  loop: "{{ _yum }}"
+  register: result
+  until: result is succeeded

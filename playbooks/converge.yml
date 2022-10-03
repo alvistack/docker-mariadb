@@ -89,14 +89,6 @@
       ansible.builtin.include_role:
         name: mariadb
 
-    - name: stop service
-      ansible.builtin.service:
-        name: "mariadb"
-        state: "stopped"
-        enabled: true
-      changed_when: false
-      failed_when: false
-
     - name: purge /etc/mysql/mariadb.conf.d
       ansible.builtin.shell:
         cmd: |
