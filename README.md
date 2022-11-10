@@ -13,12 +13,12 @@ Learn more about MariaDB: <https://mariadb.org/>
 
 ## Supported Tags and Respective Packer Template Links
 
-  - [`alvistack/mariadb-10.8`](https://hub.docker.com/r/alvistack/mariadb-10.8)
-      - [`packer/docker-10.8/packer.json`](https://github.com/alvistack/docker-mariadb/blob/master/packer/docker-10.8/packer.json)
-  - [`alvistack/mariadb-10.7`](https://hub.docker.com/r/alvistack/mariadb-10.7)
-      - [`packer/docker-10.7/packer.json`](https://github.com/alvistack/docker-mariadb/blob/master/packer/docker-10.7/packer.json)
-  - [`alvistack/mariadb-10.6`](https://hub.docker.com/r/alvistack/mariadb-10.6)
-      - [`packer/docker-10.6/packer.json`](https://github.com/alvistack/docker-mariadb/blob/master/packer/docker-10.6/packer.json)
+-   [`alvistack/mariadb-10.8`](https://hub.docker.com/r/alvistack/mariadb-10.8)
+    -   [`packer/docker-10.8/packer.json`](https://github.com/alvistack/docker-mariadb/blob/master/packer/docker-10.8/packer.json)
+-   [`alvistack/mariadb-10.7`](https://hub.docker.com/r/alvistack/mariadb-10.7)
+    -   [`packer/docker-10.7/packer.json`](https://github.com/alvistack/docker-mariadb/blob/master/packer/docker-10.7/packer.json)
+-   [`alvistack/mariadb-10.6`](https://hub.docker.com/r/alvistack/mariadb-10.6)
+    -   [`packer/docker-10.6/packer.json`](https://github.com/alvistack/docker-mariadb/blob/master/packer/docker-10.6/packer.json)
 
 ## Overview
 
@@ -26,9 +26,9 @@ This Docker container makes it easy to get an instance of MariaDB up and running
 
 Based on [Official Ubuntu Docker Image](https://hub.docker.com/_/ubuntu/) with some minor hack:
 
-  - Packaging by Packer Docker builder and Ansible provisioner in single layer
-  - Handle `ENTRYPOINT` with [catatonit](https://github.com/openSUSE/catatonit)
-  - Use [Kubernetes Peer Finder](https://github.com/kubernetes/contrib/tree/master/peer-finder) to start the actual database instance with auto peer discovery
+-   Packaging by Packer Docker builder and Ansible provisioner in single layer
+-   Handle `ENTRYPOINT` with [catatonit](https://github.com/openSUSE/catatonit)
+-   Use [Kubernetes Peer Finder](https://github.com/kubernetes/contrib/tree/master/peer-finder) to start the actual database instance with auto peer discovery
 
 ### Quick Start
 
@@ -38,7 +38,7 @@ Start MariaDB:
 
     # Pull latest image
     docker pull alvistack/mariadb-10.8
-    
+
     # Run as detach
     docker run \
         -itd \
@@ -122,7 +122,7 @@ In case of unclean shutdown or hard crash, all nodes will have `safe_to_bootstra
 
 Refer to [Official MariaDB Docker Image](https://hub.docker.com/_/mariadb/) for more information. Additionally:
 
-#### POD\_NAMESPACE
+#### POD_NAMESPACE
 
 The namespace this pod is running in, used by `peer-finder` when running as Kubernetes StatefulSet.
 
@@ -140,11 +140,11 @@ Version tags ended with `.0.0` are rolling release rebuild by [GitLab pipeline](
 
 ## License
 
-  - Code released under [Apache License 2.0](LICENSE)
-  - Docs released under [CC BY 4.0](http://creativecommons.org/licenses/by/4.0/)
+-   Code released under [Apache License 2.0](LICENSE)
+-   Docs released under [CC BY 4.0](http://creativecommons.org/licenses/by/4.0/)
 
 ## Author Information
 
-  - Wong Hoi Sing Edison
-      - <https://twitter.com/hswong3i>
-      - <https://github.com/hswong3i>
+-   Wong Hoi Sing Edison
+    -   <https://twitter.com/hswong3i>
+    -   <https://github.com/hswong3i>
