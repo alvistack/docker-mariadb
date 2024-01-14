@@ -2,6 +2,8 @@
 
 ## YYYYMMDD.Y.Z - TBC
 
+-   Support MariaDB 11.2
+-   Remove MariaDB 11.1 support
 -   Remove Ubuntu 23.04 support
 
 ## 20231225.1.2 - 2023-12-25

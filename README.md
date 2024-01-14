@@ -9,7 +9,7 @@ tag](https://img.shields.io/github/tag/alvistack/docker-mariadb.svg)](https://gi
 [![GitHub
 license](https://img.shields.io/github/license/alvistack/docker-mariadb.svg)](https://github.com/alvistack/docker-mariadb/blob/master/LICENSE)
 [![Docker
-Pulls](https://img.shields.io/docker/pulls/alvistack/mariadb-11.1.svg)](https://hub.docker.com/r/alvistack/mariadb-11.1)
+Pulls](https://img.shields.io/docker/pulls/alvistack/mariadb-11.2.svg)](https://hub.docker.com/r/alvistack/mariadb-11.2)
 
 MariaDB is a community-developed fork of the MySQL relational database
 management system intended to remain free under the GNU GPL. Being a
@@ -22,8 +22,8 @@ Learn more about MariaDB: <https://mariadb.org/>
 
 ## Supported Tags and Respective Packer Template Links
 
--   [`alvistack/mariadb-11.1`](https://hub.docker.com/r/alvistack/mariadb-11.1)
-    -   [`packer/docker-11.1/packer.json`](https://github.com/alvistack/docker-mariadb/blob/master/packer/docker-11.1/packer.json)
+-   [`alvistack/mariadb-11.2`](https://hub.docker.com/r/alvistack/mariadb-11.2)
+    -   [`packer/docker-11.2/packer.json`](https://github.com/alvistack/docker-mariadb/blob/master/packer/docker-11.2/packer.json)
 -   [`alvistack/mariadb-10.11`](https://hub.docker.com/r/alvistack/mariadb-10.11)
     -   [`packer/docker-10.11/packer.json`](https://github.com/alvistack/docker-mariadb/blob/master/packer/docker-10.11/packer.json)
 -   [`alvistack/mariadb-10.6`](https://hub.docker.com/r/alvistack/mariadb-10.6)
@@ -55,7 +55,7 @@ or via a named volume if using a docker version \>= 1.9.
 Start MariaDB:
 
     # Pull latest image
-    docker pull alvistack/mariadb-11.1
+    docker pull alvistack/mariadb-11.2
 
     # Run as detach
     docker run \
@@ -64,7 +64,7 @@ Start MariaDB:
         --publish 3306:3306 \
         --volume /var/lib/mysql:/var/lib/mysql \
         --env MYSQL_ROOT_PASSWORD=Passw0rd\! \
-        alvistack/mariadb-11.1
+        alvistack/mariadb-11.2
 
 **Success**. MariaDB is now available on port 3306.
 
