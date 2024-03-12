@@ -138,24 +138,24 @@ build:mariadb-11.3-docker:
   <<: *job-packer-build
   stage: build
   cache:
-    key: "$CI_PIPELINE_ID-mariadb-11.3-docker"
+    key: $CI_PIPELINE_ID-mariadb-11.3-docker
     paths:
       - packer/*/output-docker
   variables:
-    _IMAGE: "mariadb-11.3"
-    _PROVIDER: "docker"
+    _IMAGE: mariadb-11.3
+    _PROVIDER: docker
 
 test:mariadb-11.3-docker:
   <<: *job-molecule-test
   stage: test
   cache:
-    key: "$CI_PIPELINE_ID-mariadb-11.3-docker"
+    key: $CI_PIPELINE_ID-mariadb-11.3-docker
     paths:
       - packer/*/output-docker
     policy: pull
   variables:
-    _IMAGE: "mariadb-11.3"
-    _PROVIDER: "docker"
+    _IMAGE: mariadb-11.3
+    _PROVIDER: docker
   needs:
     - build:mariadb-11.3-docker
 
@@ -163,13 +163,13 @@ deploy:mariadb-11.3-docker:
   <<: *job-docker-push
   stage: deploy
   cache:
-    key: "$CI_PIPELINE_ID-mariadb-11.3-docker"
+    key: $CI_PIPELINE_ID-mariadb-11.3-docker
     paths:
       - packer/*/output-docker
     policy: pull
   variables:
-    _IMAGE: "mariadb-11.3"
-    _PROVIDER: "docker"
+    _IMAGE: mariadb-11.3
+    _PROVIDER: docker
   needs:
     - test:mariadb-11.3-docker
 
@@ -177,24 +177,24 @@ build:mariadb-10.11-docker:
   <<: *job-packer-build
   stage: build
   cache:
-    key: "$CI_PIPELINE_ID-mariadb-10.11-docker"
+    key: $CI_PIPELINE_ID-mariadb-10.11-docker
     paths:
       - packer/*/output-docker
   variables:
-    _IMAGE: "mariadb-10.11"
-    _PROVIDER: "docker"
+    _IMAGE: mariadb-10.11
+    _PROVIDER: docker
 
 test:mariadb-10.11-docker:
   <<: *job-molecule-test
   stage: test
   cache:
-    key: "$CI_PIPELINE_ID-mariadb-10.11-docker"
+    key: $CI_PIPELINE_ID-mariadb-10.11-docker
     paths:
       - packer/*/output-docker
     policy: pull
   variables:
-    _IMAGE: "mariadb-10.11"
-    _PROVIDER: "docker"
+    _IMAGE: mariadb-10.11
+    _PROVIDER: docker
   needs:
     - build:mariadb-10.11-docker
 
@@ -202,13 +202,13 @@ deploy:mariadb-10.11-docker:
   <<: *job-docker-push
   stage: deploy
   cache:
-    key: "$CI_PIPELINE_ID-mariadb-10.11-docker"
+    key: $CI_PIPELINE_ID-mariadb-10.11-docker
     paths:
       - packer/*/output-docker
     policy: pull
   variables:
-    _IMAGE: "mariadb-10.11"
-    _PROVIDER: "docker"
+    _IMAGE: mariadb-10.11
+    _PROVIDER: docker
   needs:
     - test:mariadb-10.11-docker
 
@@ -216,24 +216,24 @@ build:mariadb-10.6-docker:
   <<: *job-packer-build
   stage: build
   cache:
-    key: "$CI_PIPELINE_ID-mariadb-10.6-docker"
+    key: $CI_PIPELINE_ID-mariadb-10.6-docker
     paths:
       - packer/*/output-docker
   variables:
-    _IMAGE: "mariadb-10.6"
-    _PROVIDER: "docker"
+    _IMAGE: mariadb-10.6
+    _PROVIDER: docker
 
 test:mariadb-10.6-docker:
   <<: *job-molecule-test
   stage: test
   cache:
-    key: "$CI_PIPELINE_ID-mariadb-10.6-docker"
+    key: $CI_PIPELINE_ID-mariadb-10.6-docker
     paths:
       - packer/*/output-docker
     policy: pull
   variables:
-    _IMAGE: "mariadb-10.6"
-    _PROVIDER: "docker"
+    _IMAGE: mariadb-10.6
+    _PROVIDER: docker
   needs:
     - build:mariadb-10.6-docker
 
@@ -241,12 +241,12 @@ deploy:mariadb-10.6-docker:
   <<: *job-docker-push
   stage: deploy
   cache:
-    key: "$CI_PIPELINE_ID-mariadb-10.6-docker"
+    key: $CI_PIPELINE_ID-mariadb-10.6-docker
     paths:
       - packer/*/output-docker
     policy: pull
   variables:
-    _IMAGE: "mariadb-10.6"
-    _PROVIDER: "docker"
+    _IMAGE: mariadb-10.6
+    _PROVIDER: docker
   needs:
     - test:mariadb-10.6-docker
