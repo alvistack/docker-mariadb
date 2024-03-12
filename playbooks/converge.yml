@@ -1,5 +1,4 @@
 ---
-
 # Copyright 2024 Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,7 +19,7 @@
   become: true
   tasks:
     - name: include default variables
-      ansible.builtin.include_vars: "./vars/main.yml"
+      ansible.builtin.include_vars: ./vars/main.yml
 
     - name: include release specific variables
       ansible.builtin.include_vars: "{{ _loop_var }}"
@@ -37,7 +36,7 @@
             - "{{ ansible_os_family | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
             - "{{ ansible_os_family | lower }}.yml"
           paths:
-            - "./vars"
+            - ./vars
           skip: true
 
     - name: include release specific tasks
@@ -55,11 +54,11 @@
             - "{{ ansible_os_family | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
             - "{{ ansible_os_family | lower }}.yml"
           paths:
-            - "./tasks"
+            - ./tasks
           skip: true
 
     - name: include default tasks
-      ansible.builtin.include_tasks: "./tasks/main.yml"
+      ansible.builtin.include_tasks: ./tasks/main.yml
 
     - name: include role
       ansible.builtin.include_role:
@@ -96,7 +95,7 @@
           mkdir -p /etc/mysql/mariadb.conf.d
           find /etc/mysql/mariadb.conf.d/ -mindepth 1 -delete
       args:
-        executable: "/bin/bash"
+        executable: /bin/bash
       register: result
       changed_when: result is not succeeded
       failed_when: false
@@ -108,7 +107,7 @@
           mkdir -p /var/lib/mysql
           find /var/lib/mysql -mindepth 1 -delete
       args:
-        executable: "/bin/bash"
+        executable: /bin/bash
       register: result
       changed_when: result is not succeeded
       failed_when: false
@@ -122,7 +121,7 @@
           chown -Rf mysql:mysql /var/run/mysqld
           chmod 0777 /var/run/mysqld
       args:
-        executable: "/bin/bash"
+        executable: /bin/bash
       register: result
       changed_when: result is not succeeded
       failed_when: false
@@ -135,11 +134,11 @@
         mode: "{{ item.mode | default('0755') }}"
         state: "{{ item.state | default('directory') }}"
       loop:
-        - { dest: "/docker-entrypoint-initdb.d" }
-        - { dest: "/etc/mysql" }
-        - { dest: "/usr/local/bin" }
-        - { dest: "/var/lib/mysql", owner: "mysql", group: "mysql" }
-        - { dest: "/var/run/mysqld", owner: "mysql", group: "mysql", mode: "0777" }
+        - { dest: /docker-entrypoint-initdb.d }
+        - { dest: /etc/mysql }
+        - { dest: /usr/local/bin }
+        - { dest: /var/lib/mysql, owner: mysql, group: mysql }
+        - { dest: /var/run/mysqld, owner: mysql, group: mysql, mode: "0777" }
 
     - name: copy templates
       ansible.builtin.template:
@@ -149,8 +148,8 @@
         group: "{{ item.group | default('root') }}"
         mode: "{{ item.mode | default('0644') }}"
       loop:
-        - { dest: "/etc/mysql/my.cnf" }
-        - { dest: "/usr/local/bin/on-start.sh", mode: "0755" }
+        - { dest: /etc/mysql/my.cnf }
+        - { dest: /usr/local/bin/on-start.sh, mode: "0755" }
 
     - name: prepare files
       ansible.builtin.file:
@@ -160,5 +159,5 @@
         mode: "{{ item.mode | default('0644') }}"
         state: "{{ item.state | default('file') }}"
       loop:
-        - { dest: "/etc/mysql/my.cnf" }
-        - { dest: "/usr/local/bin/on-start.sh", mode: "0755" }
+        - { dest: /etc/mysql/my.cnf }
+        - { dest: /usr/local/bin/on-start.sh, mode: "0755" }
