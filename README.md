@@ -22,12 +22,12 @@ Learn more about MariaDB: <https://mariadb.org/>
 
 ## Supported Tags and Respective Packer Template Links
 
--   [`alvistack/mariadb-11.2`](https://hub.docker.com/r/alvistack/mariadb-11.2)
-    -   [`packer/docker-11.2/packer.json`](https://github.com/alvistack/docker-mariadb/blob/master/packer/docker-11.2/packer.json)
--   [`alvistack/mariadb-10.11`](https://hub.docker.com/r/alvistack/mariadb-10.11)
-    -   [`packer/docker-10.11/packer.json`](https://github.com/alvistack/docker-mariadb/blob/master/packer/docker-10.11/packer.json)
--   [`alvistack/mariadb-10.6`](https://hub.docker.com/r/alvistack/mariadb-10.6)
-    -   [`packer/docker-10.6/packer.json`](https://github.com/alvistack/docker-mariadb/blob/master/packer/docker-10.6/packer.json)
+- [`alvistack/mariadb-11.2`](https://hub.docker.com/r/alvistack/mariadb-11.2)
+  - [`packer/docker-11.2/packer.json`](https://github.com/alvistack/docker-mariadb/blob/master/packer/docker-11.2/packer.json)
+- [`alvistack/mariadb-10.11`](https://hub.docker.com/r/alvistack/mariadb-10.11)
+  - [`packer/docker-10.11/packer.json`](https://github.com/alvistack/docker-mariadb/blob/master/packer/docker-10.11/packer.json)
+- [`alvistack/mariadb-10.6`](https://hub.docker.com/r/alvistack/mariadb-10.6)
+  - [`packer/docker-10.6/packer.json`](https://github.com/alvistack/docker-mariadb/blob/master/packer/docker-10.6/packer.json)
 
 ## Overview
 
@@ -37,13 +37,13 @@ running.
 Based on [Official Ubuntu Docker
 Image](https://hub.docker.com/_/ubuntu/) with some minor hack:
 
--   Packaging by Packer Docker builder and Ansible provisioner in single
-    layer
--   Handle `ENTRYPOINT` with
-    [catatonit](https://github.com/openSUSE/catatonit)
--   Use [Kubernetes Peer
-    Finder](https://github.com/kubernetes/contrib/tree/master/peer-finder)
-    to start the actual database instance with auto peer discovery
+- Packaging by Packer Docker builder and Ansible provisioner in single
+  layer
+- Handle `ENTRYPOINT` with
+  [catatonit](https://github.com/openSUSE/catatonit)
+- Use [Kubernetes Peer
+  Finder](https://github.com/kubernetes/contrib/tree/master/peer-finder)
+  to start the actual database instance with auto peer discovery
 
 ### Quick Start
 
@@ -184,12 +184,12 @@ latest packages provided by the base image project.
 
 ## License
 
--   Code released under [Apache License 2.0](LICENSE)
--   Docs released under [CC BY
-    4.0](http://creativecommons.org/licenses/by/4.0/)
+- Code released under [Apache License 2.0](LICENSE)
+- Docs released under [CC BY
+  4.0](http://creativecommons.org/licenses/by/4.0/)
 
 ## Author Information
 
--   Wong Hoi Sing Edison
-    -   <https://twitter.com/hswong3i>
-    -   <https://github.com/hswong3i>
+- Wong Hoi Sing Edison
+  - <https://twitter.com/hswong3i>
+  - <https://github.com/hswong3i>
