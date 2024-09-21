@@ -55,7 +55,7 @@ or via a named volume if using a docker version \>= 1.9.
 Start MariaDB:
 
     # Pull latest image
-    docker pull alvistack/mariadb-10.11
+    docker pull alvistack/mariadb-11.2
 
     # Run as detach
     docker run \
@@ -64,7 +64,7 @@ Start MariaDB:
         --publish 3306:3306 \
         --volume /var/lib/mysql:/var/lib/mysql \
         --env MYSQL_ROOT_PASSWORD=Passw0rd\! \
-        alvistack/mariadb-10.11
+        alvistack/mariadb-11.2
 
 **Success**. MariaDB is now available on port 3306.
 
@@ -104,7 +104,7 @@ peer auto discovery, e.g.
     ...
     containers:
       - name: mariadb
-        image: alvistack/mariadb:latest
+        image: alvistack/mariadb-11.2:latest
         imagePullPolicy: Always
         ports:
           - containerPort: 3306
