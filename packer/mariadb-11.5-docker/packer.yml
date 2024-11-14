@@ -1,5 +1,4 @@
 ---
-
 # Copyright 2024 Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,4 +13,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-mariadb_release: "11.2"
+- name: import playbook ../../playbooks/prepare.yml
+  import_playbook: ../../playbooks/prepare.yml
+
+- name: import playbook ../../playbooks/converge.yml
+  import_playbook: ../../playbooks/converge.yml
+
+- name: import playbook ../../playbooks/side_effect.yml
+  import_playbook: ../../playbooks/side_effect.yml
+
+- name: import playbook ../../playbooks/cleanup.yml
+  import_playbook: ../../playbooks/cleanup.yml
