@@ -28,8 +28,6 @@ Learn more about MariaDB: <https://mariadb.org/>
   - [`packer/docker-11.4/packer.json`](https://github.com/alvistack/docker-mariadb/blob/master/packer/docker-11.4/packer.json)
 - [`alvistack/mariadb-10.11`](https://hub.docker.com/r/alvistack/mariadb-10.11)
   - [`packer/docker-10.11/packer.json`](https://github.com/alvistack/docker-mariadb/blob/master/packer/docker-10.11/packer.json)
-- [`alvistack/mariadb-10.6`](https://hub.docker.com/r/alvistack/mariadb-10.6)
-  - [`packer/docker-10.6/packer.json`](https://github.com/alvistack/docker-mariadb/blob/master/packer/docker-10.6/packer.json)
 
 ## Overview
 
