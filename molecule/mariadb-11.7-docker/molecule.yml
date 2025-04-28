@@ -18,8 +18,7 @@ driver:
   name: podman
 platforms:
   - name: ${_MOLECULE_INSTANCE_NAME}-1
-#    image: alvistack/mariadb-11.7
-    image: ubuntu:24.04
+    image: alvistack/mariadb-11.7
     pre_build_image: true
     privileged: true
 dependency:
