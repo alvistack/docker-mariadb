@@ -134,44 +134,44 @@ default:
     - *script-git-submodule
     - *script-linters
 
-build:mariadb-12.0-docker:
+build:mariadb-12.1-docker:
   <<: *job-packer-build
   stage: build
   cache:
-    key: $CI_PIPELINE_ID-mariadb-12.0-docker
+    key: $CI_PIPELINE_ID-mariadb-12.1-docker
     paths:
       - packer/*/output-docker
   variables:
-    _IMAGE: mariadb-12.0
+    _IMAGE: mariadb-12.1
     _PROVIDER: docker
 
-test:mariadb-12.0-docker:
+test:mariadb-12.1-docker:
   <<: *job-molecule-test
   stage: test
   cache:
-    key: $CI_PIPELINE_ID-mariadb-12.0-docker
+    key: $CI_PIPELINE_ID-mariadb-12.1-docker
     paths:
       - packer/*/output-docker
     policy: pull
   variables:
-    _IMAGE: mariadb-12.0
+    _IMAGE: mariadb-12.1
     _PROVIDER: docker
   needs:
-    - build:mariadb-12.0-docker
+    - build:mariadb-12.1-docker
 
-deploy:mariadb-12.0-docker:
+deploy:mariadb-12.1-docker:
   <<: *job-docker-push
   stage: deploy
   cache:
-    key: $CI_PIPELINE_ID-mariadb-12.0-docker
+    key: $CI_PIPELINE_ID-mariadb-12.1-docker
     paths:
       - packer/*/output-docker
     policy: pull
   variables:
-    _IMAGE: mariadb-12.0
+    _IMAGE: mariadb-12.1
     _PROVIDER: docker
   needs:
-    - test:mariadb-12.0-docker
+    - test:mariadb-12.1-docker
 
 build:mariadb-11.8-docker:
   <<: *job-packer-build
